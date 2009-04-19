@@ -1,0 +1,59 @@
+=== Flickr + Highslide ===
+
+Contributors: Pim Linders
+Donate link: http://www.pimlinders.com/wordpress
+Tags: photos, images, admin, gallery, post, photo-albums, pictures, photo, picture, image, flickr, highslide
+Requires at least: 2.7
+Tested up to: 2.7.1
+Stable tag: 0.1
+
+== Description ==
+
+This plugin displays flickr photos using highslide.
+
+Useful Links:
+* Plugin home - http://www.pimlinders.com/wordpress
+* Sign up for flickr api key - http://www.flickr.com/services/api/keys/apply/
+* Get a users flickr user ID  - http://idgettr.com/
+
+== Credits ==
+
+Copyright 2009  Pim Linders
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+** Please note **
+
+NB. Highslide JS is licensed under a Creative Commons Attribution-NonCommercial
+2.5 License. This means you need the author's permission to use highslide 
+http://www.highslide.com/ on commercial websites. 
+
+== Installation ==
+
+1. Upload the files to wp-content/plugins/flickr-highslide
+2. Activate the plugin through the 'Plugins' menu in WordPress
+3. Configure Flickr + Highslide by going to Admin -> Settings -> Flickr + Highslide
+4. Go to your post/page and insert the tag '[flickr_highslide]'
+   Alternatively you can place'<?php flickr_highslide(); ?>' in your Templates by going to Admin -> Appearance -> Editor
+
+== Screenshots ==
+
+1. Admin Area
+2. flickr gallery
+3. Highslide
+
+== Frequently Asked Questions ==
+
+N/A
