@@ -41,6 +41,7 @@ http://www.highslide.com/ on commercial websites.
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Configure Flickr + Highslide by going to Admin -> Settings -> Flickr + Highslide
 4. Go to your post/page and insert the tag '[flickr_highslide]'
+5. Alternatively you can insert `<?php flickr_highslide(); ?>` within your blog's Templates by going to Admin -> Appearance -> Editor
 
 == Screenshots ==
 
@@ -50,4 +51,10 @@ http://www.highslide.com/ on commercial websites.
 
 == Frequently Asked Questions ==
 
-N/A
+= Where can I get a flickr API key? =
+
+You can sign up for a flickr api key here http://www.flickr.com/services/api/keys/apply/
+
+= How do I find a flickr users ID? =
+
+You can use this tool http://idgettr.com/ to find your flickr user or group ID
