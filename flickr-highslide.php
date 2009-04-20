@@ -3,7 +3,7 @@
 Plugin Name: Flickr + Highslide
 Plugin URI: http://www.pimlinders.com/wordpress/
 Description: This plugin displays flickr photos using highslide.
-Version: 0.1
+Version: 0.2
 Author: Pim Linders
 Author URI: http://www.pimlinders.com
  ____                       
