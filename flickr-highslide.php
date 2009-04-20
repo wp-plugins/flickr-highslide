@@ -148,9 +148,9 @@ function flickr_highslide(){
                 ?>" 
                 alt="" /></a>
                 <?php if (get_option('title')){ ?>
-                <div class="highslide-caption">
-                    <?php echo $xml->photos->photo[$i]['title'] ?>
-                </div>
+                    <div class="highslide-caption">
+                        <?php echo $xml->photos->photo[$i]['title'] ?>
+                    </div>
                 <?php
 				}
 			}
