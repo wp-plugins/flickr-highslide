@@ -1,0 +1,3 @@
+v0.2
+-Added display photo title option
+-Removed alt tag from images
