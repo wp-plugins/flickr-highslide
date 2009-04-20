@@ -55,6 +55,6 @@ http://www.highslide.com/ on commercial websites.
 
 You can sign up for a flickr api key here http://www.flickr.com/services/api/keys/apply/
 
-= How do I find a flickr users ID? =
+= How do I find a flickr user ID? =
 
 You can use this tool http://idgettr.com/ to find your flickr user ID
