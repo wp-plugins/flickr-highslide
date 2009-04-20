@@ -11,11 +11,6 @@ Stable tag: 0.1
 
 This plugin displays flickr photos using highslide.
 
-Useful Links:
-* Plugin home - http://www.pimlinders.com/wordpress
-* Sign up for flickr api key - http://www.flickr.com/services/api/keys/apply/
-* Get a users flickr user ID  - http://idgettr.com/
-
 == Credits ==
 
 Copyright 2009  Pim Linders
@@ -39,6 +34,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 NB. Highslide JS is licensed under a Creative Commons Attribution-NonCommercial
 2.5 License. This means you need the author's permission to use highslide 
 http://www.highslide.com/ on commercial websites. 
+
+Useful Links:
+* Plugin home - http://www.pimlinders.com/wordpress
+* Sign up for flickr api key - http://www.flickr.com/services/api/keys/apply/
+* Get a users flickr user ID  - http://idgettr.com/
 
 == Installation ==
 
