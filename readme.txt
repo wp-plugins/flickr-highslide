@@ -11,11 +11,6 @@ Stable tag: 0.1
 
 This plugin displays flickr photos using highslide.
 
-Useful Links:
-* Plugin home - http://www.pimlinders.com/wordpress
-* Sign up for flickr api key - http://www.flickr.com/services/api/keys/apply/
-* Get a users flickr user ID  - http://idgettr.com/
-
 == Credits ==
 
 Copyright 2009  Pim Linders
@@ -46,7 +41,6 @@ http://www.highslide.com/ on commercial websites.
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Configure Flickr + Highslide by going to Admin -> Settings -> Flickr + Highslide
 4. Go to your post/page and insert the tag '[flickr_highslide]'
-   Alternatively you can place'<?php flickr_highslide(); ?>' in your Templates by going to Admin -> Appearance -> Editor
 
 == Screenshots ==
 
