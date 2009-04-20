@@ -70,7 +70,7 @@ function flickr_highslide_options() {
 	register_setting('flickr_highslide_options', 'imageNum');
 ?>
 	<div class="wrap">
-    	<h2>Flickr + Highslide by: <a href="http://www.pimlinders.com/wordpress">Pim Linders</a></h2>
+    	<h2>Flickr + Highslide by: <a href="http://www.pimlinders.com/">Pim Linders</a></h2>
         <form method="post" action="options.php" style="margin-top:10px;">
             <?php settings_fields('flickr_highslide_options'); ?>
             <label style="position:absolute; padding-top:5px;">Flickr API key:</label>
