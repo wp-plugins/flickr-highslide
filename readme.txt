@@ -59,16 +59,14 @@ You can sign up for a flickr api key here http://www.flickr.com/services/api/key
 
 You can use this tool http://idgettr.com/ to find your flickr user ID.
 
-= When I click on my images I get an error saying “this photo is currently unavailable” =
+= When I click on my images I get an error saying "this photo is currently unavailable" =
 
 You get this error if you’ve changed the permission of your pictures from private to public and vice versa, this changes the URL of the images. If you want large images in your blog then you’ll need to re-upload your pictures as public to flickr. You can also edit flickr-highslide.php on line 138
 
-echo $xml->photos->photo[$i]['secret'];
-echo “_b.jpg”; < ----- line 138
+echo "_b.jpg"; <----- line 138
 
 change it to
 
-echo $xml->photos->photo[$i]['secret'];
-echo “.jpg”;
+echo ".jpg";
 
-removing ‘_b’. This will give you medium sized images with the highslide effect on your blog.
+removing "_b". This will give you medium sized images with the highslide effect on your blog.
