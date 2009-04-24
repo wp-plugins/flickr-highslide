@@ -61,7 +61,7 @@ You can use this tool http://idgettr.com/ to find your flickr user ID.
 
 = When I click on my images I get an error saying "this photo is currently unavailable" =
 
-You get this error if you’ve changed the permission of your pictures from private to public and vice versa, this changes the URL of the images. If you want large images in your blog then you’ll need to re-upload your pictures as public to flickr. You can also edit flickr-highslide.php on line 138
+You get this error if you have changed the permission of your pictures from private to public and vice versa, this changes the URL of the images. If you want large images in your blog then you will need to re-upload your pictures as public to flickr. You can also edit flickr-highslide.php on line 138
 
 echo "_b.jpg"; <----- line 138
 
