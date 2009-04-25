@@ -1,3 +1,11 @@
+v0.3
+-Added highslide options
+-Added order control
+-Added image size control
+-Added thumbnail control
+-Added additional error checking
+-Fixed bugs
+
 v0.2
--Added display photo title option
+-Added display title control
 -Removed alt tag from images

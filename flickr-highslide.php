@@ -3,7 +3,7 @@
 Plugin Name: Flickr + Highslide
 Plugin URI: http://www.pimlinders.com/wordpress/
 Description: This plugin displays flickr photos using highslide.
-Version: 0.1
+Version: 0.3
 Author: Pim Linders
 Author URI: http://www.pimlinders.com
  ____                       
@@ -48,29 +48,63 @@ http://www.highslide.com/ on commercial websites.
 function flickr_highslide_menu() {
   add_options_page('Flickr + Highslide Options', 'Flickr + Highslide', 8, __FILE__, 'flickr_highslide_options');
 }
-function flickr_highslide_head() {
+function flickr_highslide_head() {	
 	$plugindir = get_bloginfo('wpurl').'/wp-content/plugins/'.dirname(plugin_basename(__FILE__));
 	echo "<script type='text/javascript' src='$plugindir/highslide/highslide.packed.js'></script>\n";
 	echo "<script type='text/javascript'>hs.graphicsDir = '$plugindir/highslide/graphics/'; hs.showCredits = false;</script>\n";
+	echo "<script type='text/javascript'>";
+	$options = get_option('options');
+	if ($options == '1'){
+		echo "hs.wrapperClassName = 'wide-border';";
+	}
+	else if ($options == '2'){
+		echo "hs.registerOverlay({html: \"<div class='closebutton' onclick='return hs.close(this)' title='Close'></div>\",position: 'top right',fade: 2 });hs.wrapperClassName = 'borderless'; ";
+	}
+	else if ($options == '3'){
+		echo "hs.outlineType = 'rounded-white';";
+	}
+	else if ($options == '4'){
+		echo "hs.outlineType = 'outer-glow';hs.wrapperClassName = 'outer-glow';";
+	}
+	else if ($options == '5'){
+		echo "hs.outlineType = null; hs.wrapperClassName = 'colored-border';";
+	}
+	else{
+		echo "hs.wrapperClassName = 'wide-border';";
+	}
+	echo "</script>\n";
 	echo "<link rel='stylesheet' href='$plugindir/highslide/highslide.css' type='text/css' />\n";
 }
+
 function flickr_highslide_activate() {
 	update_option("apikey");
 	update_option("id");
 	update_option("imageNum");
 	update_option("title");
+	update_option("options");
+	update_option("order");
+	update_option("imageSize");
+	update_option("thumb");
 }
 function flickr_highslide_init(){
 	register_setting('flickr_highslide_options', 'apikey');
 	register_setting('flickr_highslide_options', 'id');
 	register_setting('flickr_highslide_options', 'imageNum');
 	register_setting('flickr_highslide_options', 'title');
+	register_setting('flickr_highslide_options', 'options');
+	register_setting('flickr_highslide_options', 'order');
+	register_setting('flickr_highslide_options', 'imageSize');
+	register_setting('flickr_highslide_options', 'thumb');	
 }
 function flickr_highslide_options() {
 	register_setting('flickr_highslide_options', 'apikey');
 	register_setting('flickr_highslide_options', 'id');
 	register_setting('flickr_highslide_options', 'imageNum');
 	register_setting('flickr_highslide_options', 'title');
+	register_setting('flickr_highslide_options', 'options');
+	register_setting('flickr_highslide_options', 'order');
+	register_setting('flickr_highslide_options', 'imageSize');
+	register_setting('flickr_highslide_options', 'thumb');	
 ?>
 	<div class="wrap">
     	<h2>Flickr + Highslide by: <a href="http://www.pimlinders.com/">Pim Linders</a></h2>
@@ -85,7 +119,35 @@ function flickr_highslide_options() {
             <label style="position:absolute; padding-top:5px;">Number of images:</label>
             <input style="margin-left:130px;" type="text" name="imageNum" value="<?php echo get_option('imageNum'); ?>" />
             <br />
-            <label style="position:absolute; padding-top:5px;">Display title:</label>
+            <label style="position:absolute; padding-top:5px;">Highslide:</label>
+			<select name="options"style="margin-left:130px;">							
+				<option <?php if (get_option('options') == '1') { ?> selected="selected" <?php } ?> value="1">White border and drop shadow</option>
+				<option <?php if (get_option('options') == '2') { ?> selected="selected" <?php } ?> value="2">Drop shadow and no border</option>
+                <option <?php if (get_option('options') == '3') { ?> selected="selected" <?php } ?> value="3">White outline with rounded corners</option>
+                <option <?php if (get_option('options') == '4') { ?> selected="selected" <?php } ?> value="4">Dark border with outer glow</option>
+                <option <?php if (get_option('options') == '5') { ?> selected="selected" <?php } ?> value="5">No graphic outline</option>
+			</select>
+            <br />
+           	<label style="position:absolute; padding-top:5px;">Image Size:</label>
+			<select name="imageSize" style="margin-left:130px;">							
+				<option <?php if (get_option('imageSize') == 'large') { ?> selected="selected" <?php } ?> value="large">Large</option>
+				<option <?php if (get_option('imageSize') == 'medium') { ?> selected="selected" <?php } ?> value="medium">Medium</option>
+                <option <?php if (get_option('imageSize') == 'small') { ?> selected="selected" <?php } ?> value="small">Small</option>
+			</select>
+            <br />
+            <label style="position:absolute; padding-top:5px;">Thumbnail:</label>
+			<select name="thumb" style="margin-left:130px;">							
+				<option <?php if (get_option('thumb') == 'square') { ?> selected="selected" <?php } ?> value="square">Square</option>
+				<option <?php if (get_option('thumb') == 'thumbnail') { ?> selected="selected" <?php } ?> value="thumbnail">Thumbnail</option>
+			</select>
+            <br />
+            <label style="position:absolute; padding-top:5px;">Order:</label>
+			<select name="order" style="margin-left:130px;">							
+				<option <?php if (get_option('order') == 'latest') { ?> selected="selected" <?php } ?> value="latest">Latest</option>
+				<option <?php if (get_option('order') == 'random') { ?> selected="selected" <?php } ?> value="random">Random</option>
+			</select>
+            <br />
+            <label style="position:absolute; padding-top:5px;">Display titles:</label>
             <input style="margin-left:130px; margin-top:6px;" type="checkbox" name="title" value="true" <?php if(get_option('title')  == "true"){echo "checked" ;}?>/>
             <p class="submit" style="padding-top:10px;"><input type="submit" name="Submit" value="Save changes"/></p>
         </form>
@@ -106,27 +168,58 @@ add_shortcode('flickr_highslide', 'flickr_highslide');
 register_activation_hook( __FILE__, 'flickr_highslide_activate' );
 ?>
 <?php
+function random($total){
+	$imageNum = get_option('imageNum');
+	if($total > 100)
+		$total = 100;
+	if ($imageNum > $total)
+		$imageNum = $total;
+	$numbers = array(); 
+	for ($i=0; $i<$total; $i++) {
+		$numbers[$i] = $i;
+	}
+	$rand = array_rand($numbers, $imageNum);
+	return $rand;
+}
 function flickr_highslide(){
 	$apikey = get_option('apikey');
 	$id = get_option('id');
-	$imagesNum = get_option('imageNum');
-	if($apikey == '' || $id == '' || $imagesNum == ''){
+	$imageNum = get_option('imageNum');
+	$order = get_option('order');
+	$imageSize = get_option('imageSize');
+	$thumbnail = get_option('thumb');
+	if($apikey == '' || $id == '' || $imageNum == '')
 		echo '<p>To configure Flickr + Highslide go to Admin -> Setting -> Flickr + Highslide</p>';
-	}
 	else{	
 		$xml = simplexml_load_file("http://flickr.com/services/rest/?method=flickr.people.getPublicPhotos&user_id=$id&api_key=$apikey");
 		if ($xml->err['msg']){
 			echo '<p>Flickr + Highslide is not configured correctly</p><p>Error Message: ' . $xml->err['msg'] . '</p>';	
 		}
 		else{
+			$total = $xml->photos['total'];
+			if ($order == 'random')
+				$random = random($total);
+			if ($imageSize == 'medium')
+				$size = '';
+			else if ($imageSize == 'small')
+				$size = '_m';
+			else
+				$size = '_b';
+			if ($thumbnail == 'thumbnail')
+				$thumbnail = '_t';
+			else
+				$thumbnail = '_s';	
 		?>
         <!-- Flickr + Highslide by Pim Linders http://www.pimlinders.com/ -->
 		<div class="flickr_highslide" style="overflow:auto;">
 		<?php
-			for ($i = 0; $i<$imagesNum; $i++) {
-				if($xml->photos->photo[$i]['server'] == NULL){
+			for ($k=0; $k<$imageNum; $k++) {
+				if ($order == 'random')
+					$i = $random[$k];
+				else
+					$i = $k;
+				if($xml->photos->photo[$i]['server'] == NULL)
 					break;
-				}
 				?>
                 <a href="<?php 
                 echo "http://static.flickr.com/";
@@ -135,7 +228,7 @@ function flickr_highslide(){
                 echo $xml->photos->photo[$i]['id'];
                 echo "_";
                 echo $xml->photos->photo[$i]['secret'];
-                echo "_b.jpg"; 
+                echo "$size.jpg"; 
                 ?>" class="highslide" onclick="return hs.expand(this)">
                 <img src="<?php 
                 echo "http://static.flickr.com/";
@@ -144,7 +237,7 @@ function flickr_highslide(){
                 echo $xml->photos->photo[$i]['id'];
                 echo "_";
                 echo $xml->photos->photo[$i]['secret'];
-                echo "_s.jpg"; 
+                echo "$thumbnail.jpg"; 
                 ?>" 
                 alt="" /></a>
                 <?php if (get_option('title')){ ?>

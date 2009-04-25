@@ -5,7 +5,7 @@ Donate link: http://www.pimlinders.com/wordpress
 Tags: photos, images, admin, gallery, post, photo-albums, pictures, photo, picture, image, flickr, highslide
 Requires at least: 2.7
 Tested up to: 2.7.1
-Stable tag: 0.2
+Stable tag: 0.3
 
 == Description ==
 
@@ -59,14 +59,6 @@ You can sign up for a flickr api key here http://www.flickr.com/services/api/key
 
 You can use this tool http://idgettr.com/ to find your flickr user ID.
 
-= When I click on my images I get an error saying "this photo is currently unavailable" =
+= This photo is currently unavailable =
 
-You get this error if you have changed the permission of your pictures from private to public and vice versa, this changes the URL of the images. If you want large images in your blog then you will need to re-upload your pictures as public to flickr. You can also edit flickr-highslide.php on line 138
-
-echo "_b.jpg"; <----- line 138
-
-change it to
-
-echo ".jpg";
-
-removing "_b". This will give you medium sized images with the highslide effect on your blog.
+You get this error if you have changed the permission of your pictures from private to public and vice versa, this changes the URL of the images. If you want large images in your blog then you will need to re-upload your pictures as public to flickr. Changing the image size to medium or small will display your images.
