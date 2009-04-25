@@ -61,4 +61,4 @@ You can use this tool http://idgettr.com/ to find your flickr user ID.
 
 = This photo is currently unavailable =
 
-You get this error if you have changed the permission of your pictures from private to public and vice versa, this changes the URL of the images. If you want large images in your blog then you will need to re-upload your pictures as public to flickr. Changing the image size to medium or small will display your images.
+You get this error if you have changed the permission of your pictures from private to public and vice versa. If you want large images in your blog then you will need to re-upload your pictures as public to flickr. Changing the image size to medium or small will display your images.
