@@ -75,7 +75,6 @@ function flickr_highslide_head() {
 	echo "</script>\n";
 	echo "<link rel='stylesheet' href='$plugindir/highslide/highslide.css' type='text/css' />\n";
 }
-
 function flickr_highslide_activate() {
 	update_option("apikey");
 	update_option("id");
