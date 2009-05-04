@@ -1,3 +1,6 @@
+v1.0
+-Improved backend
+
 v0.3
 -Added highslide options
 -Added order control

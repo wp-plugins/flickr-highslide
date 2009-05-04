@@ -3,7 +3,7 @@
 Plugin Name: Flickr + Highslide
 Plugin URI: http://www.pimlinders.com/wordpress/
 Description: This plugin displays flickr photos using highslide.
-Version: 0.3
+Version: 1.0
 Author: Pim Linders
 Author URI: http://www.pimlinders.com
  ____                       
@@ -39,7 +39,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 ** Please note **
 
-NB. Highslide JS is licensed under a Creative Commons Attribution-NonCommercial
+Highslide JS is licensed under a Creative Commons Attribution-NonCommercial
 2.5 License. This means you need the author's permission to use highslide 
 http://www.highslide.com/ on commercial websites. 
 */
@@ -75,8 +75,8 @@ function flickr_highslide_head() {
 	echo "</script>\n";
 	echo "<link rel='stylesheet' href='$plugindir/highslide/highslide.css' type='text/css' />\n";
 }
+
 function flickr_highslide_activate() {
-	update_option("apikey");
 	update_option("id");
 	update_option("imageNum");
 	update_option("title");
@@ -86,7 +86,6 @@ function flickr_highslide_activate() {
 	update_option("thumb");
 }
 function flickr_highslide_init(){
-	register_setting('flickr_highslide_options', 'apikey');
 	register_setting('flickr_highslide_options', 'id');
 	register_setting('flickr_highslide_options', 'imageNum');
 	register_setting('flickr_highslide_options', 'title');
@@ -96,7 +95,6 @@ function flickr_highslide_init(){
 	register_setting('flickr_highslide_options', 'thumb');	
 }
 function flickr_highslide_options() {
-	register_setting('flickr_highslide_options', 'apikey');
 	register_setting('flickr_highslide_options', 'id');
 	register_setting('flickr_highslide_options', 'imageNum');
 	register_setting('flickr_highslide_options', 'title');
@@ -109,11 +107,8 @@ function flickr_highslide_options() {
     	<h2>Flickr + Highslide by: <a href="http://www.pimlinders.com/">Pim Linders</a></h2>
         <form method="post" action="options.php" style="margin-top:10px;">
             <?php settings_fields('flickr_highslide_options'); ?>
-            <label style="position:absolute; padding-top:5px;">Flickr API key:</label>
-            <input style="margin-left:130px; width:300px;" type="text" name="apikey" value="<?php echo get_option('apikey'); ?>" />
-            <br />
             <label style="position:absolute; padding-top:5px;">Flickr user ID:</label>
-            <input style="margin-left:130px;" type="text" name="id" value="<?php echo get_option('id'); ?>" />
+            <input style="margin-left:130px;" type="text" name="id" value="<?php echo get_option('id'); ?>" /><a href="http://idgettr.com/" style="margin-left:3px;">Find your flickr user ID</a>
             <br />
             <label style="position:absolute; padding-top:5px;">Number of images:</label>
             <input style="margin-left:130px;" type="text" name="imageNum" value="<?php echo get_option('imageNum'); ?>" />
@@ -181,13 +176,13 @@ function random($total){
 	return $rand;
 }
 function flickr_highslide(){
-	$apikey = get_option('apikey');
+	$apikey =  '7410a0ef9c742bc8175d7930c1fa7022';
 	$id = get_option('id');
 	$imageNum = get_option('imageNum');
 	$order = get_option('order');
 	$imageSize = get_option('imageSize');
 	$thumbnail = get_option('thumb');
-	if($apikey == '' || $id == '' || $imageNum == '')
+	if($id == '' || $imageNum == '')
 		echo '<p>To configure Flickr + Highslide go to Admin -> Setting -> Flickr + Highslide</p>';
 	else{	
 		$xml = simplexml_load_file("http://flickr.com/services/rest/?method=flickr.people.getPublicPhotos&user_id=$id&api_key=$apikey");

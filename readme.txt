@@ -5,7 +5,7 @@ Donate link: http://www.pimlinders.com/wordpress
 Tags: photos, images, admin, gallery, post, photo-albums, pictures, photo, picture, image, flickr, highslide
 Requires at least: 2.7
 Tested up to: 2.7.1
-Stable tag: 0.3
+Stable tag: 1.0
 
 == Description ==
 
@@ -31,7 +31,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 ** Please note **
 
-NB. Highslide JS is licensed under a Creative Commons Attribution-NonCommercial
+Highslide JS is licensed under a Creative Commons Attribution-NonCommercial
 2.5 License. This means you need the author's permission to use highslide 
 http://www.highslide.com/ on commercial websites. 
 
@@ -51,14 +51,10 @@ http://www.highslide.com/ on commercial websites.
 
 == Frequently Asked Questions ==
 
-= Where can I get a flickr API key? =
-
-You can sign up for a flickr api key here http://www.flickr.com/services/api/keys/apply/
-
 = How do I find a flickr user ID? =
 
 You can use this tool http://idgettr.com/ to find your flickr user ID.
 
 = This photo is currently unavailable =
 
-You get this error if you have changed the permission of your pictures from private to public and vice versa. If you want large images in your blog then you will need to re-upload your pictures as public to flickr. Changing the image size to medium or small will display your images.
+You get this error if you have changed the permission of your pictures from private to public and vice versa. If you want large images then you will need to re-upload your pictures as public to flickr. Changing the image size to medium or small will display your images.
