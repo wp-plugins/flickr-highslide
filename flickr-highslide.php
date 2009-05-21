@@ -3,7 +3,7 @@
 Plugin Name: Flickr + Highslide
 Plugin URI: http://www.pimlinders.com/wordpress/
 Description: This plugin displays flickr photos using highslide.
-Version: 1.0
+Version: 1.0.1
 Author: Pim Linders
 Author URI: http://www.pimlinders.com
  ____                       
@@ -43,14 +43,12 @@ Highslide JS is licensed under a Creative Commons Attribution-NonCommercial
 2.5 License. This means you need the author's permission to use highslide 
 http://www.highslide.com/ on commercial websites. 
 */
-?>
-<?php
 function flickr_highslide_menu() {
   add_options_page('Flickr + Highslide Options', 'Flickr + Highslide', 8, __FILE__, 'flickr_highslide_options');
 }
 function flickr_highslide_head() {	
 	$plugindir = get_bloginfo('wpurl').'/wp-content/plugins/'.dirname(plugin_basename(__FILE__));
-	echo "<script type='text/javascript' src='$plugindir/highslide/highslide.packed.js'></script>\n";
+	echo "<script type='text/javascript' src='$plugindir/highslide/highslide-with-gallery.packed.js'></script>\n";
 	echo "<script type='text/javascript'>hs.graphicsDir = '$plugindir/highslide/graphics/'; hs.showCredits = false;</script>\n";
 	echo "<script type='text/javascript'>";
 	$options = get_option('options');
@@ -58,24 +56,308 @@ function flickr_highslide_head() {
 		echo "hs.wrapperClassName = 'wide-border';";
 	}
 	else if ($options == '2'){
-		echo "hs.registerOverlay({html: \"<div class='closebutton' onclick='return hs.close(this)' title='Close'></div>\",position: 'top right',fade: 2 });hs.wrapperClassName = 'borderless'; ";
+		echo "
+			hs.registerOverlay({
+			html: '<div class=\"closebutton\" onclick=\"return hs.close(this)\" title=\"Close\"></div>',
+			position: 'top right',
+			fade: 2
+		});
+		hs.wrapperClassName = 'borderless';
+		";
 	}
 	else if ($options == '3'){
 		echo "hs.outlineType = 'rounded-white';";
 	}
 	else if ($options == '4'){
-		echo "hs.outlineType = 'outer-glow';hs.wrapperClassName = 'outer-glow';";
+		echo "
+			hs.outlineType = 'outer-glow';
+			hs.wrapperClassName = 'outer-glow';
+		";
 	}
 	else if ($options == '5'){
-		echo "hs.outlineType = null; hs.wrapperClassName = 'colored-border';";
+		echo "
+			hs.outlineType = null;
+			hs.wrapperClassName = 'colored-border';
+		";
+	}
+	else if ($options == '6'){
+		echo "
+			hs.align = 'center';
+			hs.transitions = ['expand', 'crossfade'];
+			hs.outlineType = 'rounded-white';
+			hs.fadeInOut = true;
+			hs.addSlideshow({
+				interval: 5000,
+				repeat: false,
+				useControls: true,
+				fixedControls: 'fit',
+				overlayOptions: {
+					opacity: .75,
+					position: 'bottom center',
+					hideOnMouseOut: true
+				}
+			});
+		";
+	}
+	else if ($options == '7'){
+		echo "
+			hs.align = 'center';
+			hs.transitions = ['expand', 'crossfade'];
+			hs.outlineType = 'glossy-dark';
+			hs.wrapperClassName = 'dark';
+			hs.fadeInOut = true;
+			if (hs.addSlideshow) hs.addSlideshow({
+				interval: 5000,
+				repeat: false,
+				useControls: true,
+				fixedControls: 'fit',
+				overlayOptions: {
+					opacity: .6,
+					position: 'bottom center',
+					hideOnMouseOut: true
+				}
+			});
+		";
+	}
+	else if ($options == '8'){
+		echo "
+			hs.align = 'center';
+			hs.transitions = ['expand', 'crossfade'];
+			hs.outlineType = 'rounded-white';
+			hs.wrapperClassName = 'controls-in-heading';
+			hs.fadeInOut = true;
+			if (hs.addSlideshow) hs.addSlideshow({
+				interval: 5000,
+				repeat: false,
+				useControls: true,
+				fixedControls: false,
+				overlayOptions: {
+					opacity: 1,
+					position: 'top right',
+					hideOnMouseOut: false
+				}
+			});
+		";
+	}
+	else if ($options == '9'){
+		echo "
+			hs.align = 'center';
+			hs.transitions = ['expand', 'crossfade'];
+			hs.wrapperClassName = 'dark borderless floating-caption';
+			hs.fadeInOut = true;
+			hs.dimmingOpacity = .75;
+			if (hs.addSlideshow) hs.addSlideshow({
+				interval: 5000,
+				repeat: false,
+				useControls: true,
+				fixedControls: 'fit',
+				overlayOptions: {
+					opacity: .6,
+					position: 'bottom center',
+					hideOnMouseOut: true
+				}
+			});
+		";
+	}
+	else if ($options == '10'){
+		echo "
+			hs.align = 'center';
+			hs.transitions = ['expand', 'crossfade'];
+			hs.outlineType = 'rounded-white';
+			hs.fadeInOut = true;
+			hs.dimmingOpacity = 0.75;
+			hs.useBox = true;
+			hs.width = 640;
+			hs.height = 480;
+			hs.addSlideshow({
+				interval: 5000,
+				repeat: false,
+				useControls: true,
+				fixedControls: 'fit',
+				overlayOptions: {
+					opacity: 1,
+					position: 'bottom center',
+					hideOnMouseOut: true
+				}
+			});
+		";
+	}
+	else if ($options == '11'){
+		echo "
+			hs.align = 'center';
+			hs.transitions = ['expand', 'crossfade'];
+			hs.fadeInOut = true;
+			hs.dimmingOpacity = 0.8;
+			hs.wrapperClassName = 'borderless floating-caption';
+			hs.captionEval = 'this.thumb.alt';
+			hs.marginLeft = 100; 
+			hs.marginBottom = 80
+			hs.numberPosition = 'caption';
+			hs.lang.number = '%1/%2';
+			hs.addSlideshow({
+				interval: 5000,
+				repeat: false,
+				useControls: true,
+				overlayOptions: {
+					className: 'text-controls',
+					position: 'bottom center',
+					relativeTo: 'viewport',
+					offsetX: 50,
+					offsetY: -5
+		
+				},
+				thumbstrip: {
+					position: 'middle left',
+					mode: 'vertical',
+					relativeTo: 'viewport'
+				}
+			});
+			hs.registerOverlay({
+				html: '<div class=\"closebutton\" onclick=\"return hs.close(this\)\" title=\"Close\"></div>',
+				position: 'top right',
+				fade: 2
+			});
+		";
+	}
+	else if ($options == '12'){
+		echo "
+			hs.align = 'center';
+			hs.transitions = ['expand', 'crossfade'];
+			hs.fadeInOut = true;
+			hs.dimmingOpacity = 0.8;
+			hs.outlineType = 'rounded-white';
+			hs.captionEval = 'this.thumb.alt';
+			hs.marginBottom = 105;
+			hs.numberPosition = 'caption';
+			hs.addSlideshow({
+				interval: 5000,
+				repeat: false,
+				useControls: true,
+				overlayOptions: {
+					className: 'text-controls',
+					position: 'bottom center',
+					relativeTo: 'viewport',
+					offsetY: -60
+				},
+				thumbstrip: {
+					position: 'bottom center',
+					mode: 'horizontal',
+					relativeTo: 'viewport'
+				}
+			});
+		";
+	}
+	else if ($options == '13'){
+		echo "
+			hs.transitions = ['expand', 'crossfade'];
+			hs.restoreCursor = null;
+			hs.lang.restoreTitle = 'Click for next image';
+			hs.addSlideshow({
+				interval: 5000,
+				repeat: true,
+				useControls: true,
+				overlayOptions: {
+					position: 'bottom right',
+					offsetY: 50
+				},
+				thumbstrip: {
+					position: 'above',
+					mode: 'horizontal',
+					relativeTo: 'expander'
+				}
+			});
+			var inPageOptions = {
+				outlineType: null,
+				allowSizeReduction: false,
+				wrapperClassName: 'in-page controls-in-heading',
+				useBox: true,
+				width: 600,
+				height: 400,
+				targetX: 'gallery-area 10px',
+				targetY: 'gallery-area',
+				captionEval: 'this.thumb.alt',
+				numberPosition: 'caption'
+			}
+			hs.addEventListener(window, 'load', function() {
+				document.getElementById('thumb1').onclick();
+			});
+			hs.Expander.prototype.onImageClick = function() {
+				if (/in-page/.test(this.wrapper.className))	return hs.next();
+			}
+			hs.Expander.prototype.onBeforeClose = function() {
+				if (/in-page/.test(this.wrapper.className))	return false;
+			}
+			hs.Expander.prototype.onDrag = function() {
+				if (/in-page/.test(this.wrapper.className))	return false;
+			}
+			hs.addEventListener(window, 'resize', function() {
+				var i, exp;
+				hs.page = hs.getPageSize();
+		
+				for (i = 0; i < hs.expanders.length; i++) {
+					exp = hs.expanders[i];
+					if (exp) {
+						var x = exp.x,
+							y = exp.y;
+						exp.tpos = hs.getPosition(exp.el);
+						x.calcThumb();
+						y.calcThumb();
+						x.pos = x.tpos - x.cb + x.tb;
+						x.scroll = hs.page.scrollLeft;
+						x.clientSize = hs.page.width;
+						y.pos = y.tpos - y.cb + y.tb;
+						y.scroll = hs.page.scrollTop;
+						y.clientSize = hs.page.height;
+						exp.justify(x, true);
+						exp.justify(y, true);
+						exp.moveTo(x.pos, y.pos);
+					}
+				}
+			});
+		";
 	}
 	else{
 		echo "hs.wrapperClassName = 'wide-border';";
 	}
 	echo "</script>\n";
 	echo "<link rel='stylesheet' href='$plugindir/highslide/highslide.css' type='text/css' />\n";
+	if ($options == '11'){
+		echo "
+			<style type=\"text/css\">
+				.highslide-caption {
+					width: 100%;
+					text-align: center;
+				}
+				.highslide-close {
+					display: none !important;
+				}
+				.highslide-number {
+					display: inline;
+					padding-right: 1em;
+					color: white;
+				}
+			</style>
+		";
+	}	
+	if ($options == '13'){
+		echo "
+		<style type=\"text/css\">
+			.highslide-image {
+				border: 1px solid black;
+			}
+			.highslide-controls {
+				width: 90px !important;
+			}
+			.highslide-controls .highslide-close {
+				display: none;
+			}
+			.highslide-caption {
+				padding: .5em 0;
+			}
+		</style>
+		";
+	}
 }
-
 function flickr_highslide_activate() {
 	update_option("id");
 	update_option("imageNum");
@@ -103,56 +385,69 @@ function flickr_highslide_options() {
 	register_setting('flickr_highslide_options', 'imageSize');
 	register_setting('flickr_highslide_options', 'thumb');	
 ?>
-	<div class="wrap">
-    	<h2>Flickr + Highslide by: <a href="http://www.pimlinders.com/">Pim Linders</a></h2>
-        <form method="post" action="options.php" style="margin-top:10px;">
-            <?php settings_fields('flickr_highslide_options'); ?>
-            <label style="position:absolute; padding-top:5px;">Flickr user ID:</label>
-            <input style="margin-left:130px;" type="text" name="id" value="<?php echo get_option('id'); ?>" /><a href="http://idgettr.com/" style="margin-left:3px;">Find your flickr user ID</a>
-            <br />
-            <label style="position:absolute; padding-top:5px;">Number of images:</label>
-            <input style="margin-left:130px;" type="text" name="imageNum" value="<?php echo get_option('imageNum'); ?>" />
-            <br />
-            <label style="position:absolute; padding-top:5px;">Highslide:</label>
-			<select name="options"style="margin-left:130px;">							
-				<option <?php if (get_option('options') == '1') { ?> selected="selected" <?php } ?> value="1">White border and drop shadow</option>
-				<option <?php if (get_option('options') == '2') { ?> selected="selected" <?php } ?> value="2">Drop shadow and no border</option>
+<div class="wrap">
+<table class="form-table">
+    <form method="post" action="options.php">
+        <h2>Flickr + Highslide by: <a href="http://www.pimlinders.com/">Pim Linders</a></h2>
+        <?php settings_fields('flickr_highslide_options'); ?>
+        <tr valign="top">
+            <th scope="row">Flickr user ID:</th>
+            <td><input type="text" name="id" value="<?php echo get_option('id'); ?>" /><a style="margin-left:5px;" href="http://idgettr.com/">Find your flickr user ID</a></td>
+        </tr>
+        <tr valign="top">
+            <th scope="row">Number of images:</th>
+            <td><input type="text" name="imageNum" value="<?php echo get_option('imageNum'); ?>" /><span style="margin-left:5px;">(Up to 100 images)</span></td>
+        </tr>
+        <tr valign="top">
+            <th scope="row">Highslide:</th>
+            <td><select name="options">							
+                <option <?php if (get_option('options') == '1') { ?> selected="selected" <?php } ?> value="1">White border and drop shadow</option>
+                <option <?php if (get_option('options') == '2') { ?> selected="selected" <?php } ?> value="2">Drop shadow and no border</option>
                 <option <?php if (get_option('options') == '3') { ?> selected="selected" <?php } ?> value="3">White outline with rounded corners</option>
                 <option <?php if (get_option('options') == '4') { ?> selected="selected" <?php } ?> value="4">Dark border with outer glow</option>
                 <option <?php if (get_option('options') == '5') { ?> selected="selected" <?php } ?> value="5">No graphic outline</option>
-			</select>
-            <br />
-           	<label style="position:absolute; padding-top:5px;">Image Size:</label>
-			<select name="imageSize" style="margin-left:130px;">							
-				<option <?php if (get_option('imageSize') == 'large') { ?> selected="selected" <?php } ?> value="large">Large</option>
-				<option <?php if (get_option('imageSize') == 'medium') { ?> selected="selected" <?php } ?> value="medium">Medium</option>
+                <option <?php if (get_option('options') == '6') { ?> selected="selected" <?php } ?> value="6">Gallery - White design</option>
+                <option <?php if (get_option('options') == '7') { ?> selected="selected" <?php } ?> value="7">Gallery - Dark design</option>
+                <option <?php if (get_option('options') == '8') { ?> selected="selected" <?php } ?> value="8">Gallery - Controls in the heading</option>
+                <option <?php if (get_option('options') == '9') { ?> selected="selected" <?php } ?> value="9">Gallery - No border and a floating caption</option>
+                <option <?php if (get_option('options') == '10') { ?> selected="selected" <?php } ?> value="10">Gallery - Images within a fixed box</option>
+                <option <?php if (get_option('options') == '11') { ?> selected="selected" <?php } ?> value="11">Gallery - Vertical thumbstrip to the left</option>
+                <option <?php if (get_option('options') == '12') { ?> selected="selected" <?php } ?> value="12">Gallery - Horizontal thumbstrip at the bottom</option>
+                <option <?php if (get_option('options') == '13') { ?> selected="selected" <?php } ?> value="13">Gallery - Gallery in the parent page</option>
+            </select></td>
+        </tr>
+        <tr valign="top">
+            <th scope="row">Image Size:</th>
+            <td><select name="imageSize">							
+                <option <?php if (get_option('imageSize') == 'large') { ?> selected="selected" <?php } ?> value="large">Large</option>
+                <option <?php if (get_option('imageSize') == 'medium') { ?> selected="selected" <?php } ?> value="medium">Medium</option>
                 <option <?php if (get_option('imageSize') == 'small') { ?> selected="selected" <?php } ?> value="small">Small</option>
-			</select>
-            <br />
-            <label style="position:absolute; padding-top:5px;">Thumbnail:</label>
-			<select name="thumb" style="margin-left:130px;">							
-				<option <?php if (get_option('thumb') == 'square') { ?> selected="selected" <?php } ?> value="square">Square</option>
-				<option <?php if (get_option('thumb') == 'thumbnail') { ?> selected="selected" <?php } ?> value="thumbnail">Thumbnail</option>
-			</select>
-            <br />
-            <label style="position:absolute; padding-top:5px;">Order:</label>
-			<select name="order" style="margin-left:130px;">							
-				<option <?php if (get_option('order') == 'latest') { ?> selected="selected" <?php } ?> value="latest">Latest</option>
-				<option <?php if (get_option('order') == 'random') { ?> selected="selected" <?php } ?> value="random">Random</option>
-			</select>
-            <br />
-            <label style="position:absolute; padding-top:5px;">Display titles:</label>
-            <input style="margin-left:130px; margin-top:6px;" type="checkbox" name="title" value="true" <?php if(get_option('title')  == "true"){echo "checked" ;}?>/>
-            <p class="submit" style="padding-top:10px;"><input type="submit" name="Submit" value="Save changes"/></p>
-        </form>
-   		<h4>Like Flickr + Highslide? make a donation</h4>
-        <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-            <input type="hidden" name="cmd" value="_s-xclick" />
-            <input type="hidden" name="hosted_button_id" value="4821221" />
-            <input type="image" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG.gif" name="submit" alt="PayPal - The safer, easier way to pay online!" />
-            <img alt="" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
-        </form>
-    </div>
+            </select></td>
+        </tr>
+        <tr valign="top">
+            <th scope="row">Thumbnail:</th>
+            <td><select name="thumb">							
+                <option <?php if (get_option('thumb') == 'square') { ?> selected="selected" <?php } ?> value="square">Square</option>
+                <option <?php if (get_option('thumb') == 'thumbnail') { ?> selected="selected" <?php } ?> value="thumbnail">Thumbnail</option>
+            </select></td>
+        </tr>
+        <tr valign="top">
+            <th scope="row">Order:</th>
+            <td><select name="order">							
+                <option <?php if (get_option('order') == 'latest') { ?> selected="selected" <?php } ?> value="latest">Latest</option>
+                <option <?php if (get_option('order') == 'random') { ?> selected="selected" <?php } ?> value="random">Random</option>
+            </select></td>
+        </tr>
+        <tr valign="top">
+            <th scope="row">Display titles:</th>
+            <td><input type="checkbox" name="title" value="true" <?php if(get_option('title')  == "true"){echo "checked" ;}?>/></td>
+        </tr>
+        <tr valign="top">
+        	<td><p class="submit"><input type="submit" name="Submit" value="Save changes"/></p></td>
+        </tr>
+    </form>
+</table>
+</div>
 <?php
 }
 add_action( "wp_head", 'flickr_highslide_head' );
@@ -160,8 +455,6 @@ add_action('admin_menu', 'flickr_highslide_menu');
 add_action( 'admin_init', 'flickr_highslide_init' );
 add_shortcode('flickr_highslide', 'flickr_highslide');
 register_activation_hook( __FILE__, 'flickr_highslide_activate' );
-?>
-<?php
 function random($total){
 	$imageNum = get_option('imageNum');
 	if($total > 100)
@@ -182,6 +475,7 @@ function flickr_highslide(){
 	$order = get_option('order');
 	$imageSize = get_option('imageSize');
 	$thumbnail = get_option('thumb');
+	$options = get_option('options');
 	if($id == '' || $imageNum == '')
 		echo '<p>To configure Flickr + Highslide go to Admin -> Setting -> Flickr + Highslide</p>';
 	else{	
@@ -199,14 +493,22 @@ function flickr_highslide(){
 				$size = '_m';
 			else
 				$size = '_b';
+			if ($options == '9' || $options == '13')
+				$size = '';
 			if ($thumbnail == 'thumbnail')
 				$thumbnail = '_t';
 			else
 				$thumbnail = '_s';	
 		?>
         <!-- Flickr + Highslide by Pim Linders http://www.pimlinders.com/ -->
-		<div class="flickr_highslide" style="overflow:auto;">
+        <?php if($options == '13'){ ?>
+        	<div class="flickr_highslide" style="overflow:auto; display:none;">
+        <?php } else{ ?>
+        	<div class="flickr_highslide" style="overflow:auto;">
+        <?php } ?>
 		<?php
+			if($options == '8')
+				$heading = true;
 			for ($k=0; $k<$imageNum; $k++) {
 				if ($order == 'random')
 					$i = $random[$k];
@@ -215,7 +517,18 @@ function flickr_highslide(){
 				if($xml->photos->photo[$i]['server'] == NULL)
 					break;
 				?>
-                <a href="<?php 
+                <?php if (get_option('title')==true && $heading == true){ ?>
+                    <div class="highslide-heading">
+                       <?php echo $xml->photos->photo[$i]['title'] ?>
+                    </div>
+				<?php } if(get_option('title')==false && $heading == true){?>
+                    <div class="highslide-heading"></div>
+                <?php } ?>
+                <a 
+				<?php if($options == '13' && $k==0){ ?>
+                	id="thumb1"
+                <?php } ?>
+                href="<?php 
                 echo "http://static.flickr.com/";
                 echo $xml->photos->photo[$i]['server'];
                 echo "/";
@@ -223,7 +536,11 @@ function flickr_highslide(){
                 echo "_";
                 echo $xml->photos->photo[$i]['secret'];
                 echo "$size.jpg"; 
-                ?>" class="highslide" onclick="return hs.expand(this)">
+                ?>" <?php if($options == '13'){ ?>
+                	class="highslide" onclick="return hs.expand(this, inPageOptions)">
+				<?php } else{ ?>
+                	class="highslide" onclick="return hs.expand(this)">
+				<?php } ?>
                 <img src="<?php 
                 echo "http://static.flickr.com/";
                 echo $xml->photos->photo[$i]['server'];
@@ -234,14 +551,18 @@ function flickr_highslide(){
                 echo "$thumbnail.jpg"; 
                 ?>" 
                 alt="" /></a>
-                <?php if (get_option('title')){ ?>
+                <?php if (get_option('title') && $heading == false){ ?>
                     <div class="highslide-caption">
                         <?php echo $xml->photos->photo[$i]['title'] ?>
                     </div>
                 <?php
 				}
 			}
-		?></div><?php
+			?></div>
+        	<?php if($options == '13'){ ?>
+        		<div id="gallery-area" style="width: 620px; height: 605px; margin: 0 auto; border: 1px solid silver"></div>
+			<?php
+			}
 		}
 	}
 }

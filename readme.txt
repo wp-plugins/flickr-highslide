@@ -5,7 +5,7 @@ Donate link: http://www.pimlinders.com/wordpress
 Tags: photos, images, admin, gallery, post, photo-albums, pictures, photo, picture, image, flickr, highslide
 Requires at least: 2.7
 Tested up to: 2.7.1
-Stable tag: 1.0
+Stable tag: 1.0.1
 
 == Description ==
 
@@ -46,8 +46,12 @@ http://www.highslide.com/ on commercial websites.
 == Screenshots ==
 
 1. Admin Area
-2. flickr gallery
-3. Highslide
+2. Flickr gallery
+3. Highslide - White border and drop shadow
+4. Highslide - White design
+5. Highslide - Vertical thumbstrip to the left
+6. Highslide - Gallery in the parent page
+
 
 == Frequently Asked Questions ==
 
