@@ -5,7 +5,7 @@ Donate link: http://www.pimlinders.com/wordpress
 Tags: photos, images, admin, gallery, post, photo-albums, pictures, photo, picture, image, flickr, highslide
 Requires at least: 2.7
 Tested up to: 2.7.1
-Stable tag: 1.0.1
+Stable tag: 1.1
 
 == Description ==
 
