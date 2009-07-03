@@ -1,0 +1,20 @@
+v1.2
+-Added photoset support
+
+v1.1
+-Added highslide gallery options
+
+v1.0
+-Improved backend
+
+v0.3
+-Added highslide options
+-Added order control
+-Added image size control
+-Added thumbnail control
+-Added additional error checking
+-Fixed bugs
+
+v0.2
+-Added display title control
+-Removed alt tag from images
