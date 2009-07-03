@@ -2,14 +2,23 @@
 
 Contributors: Pim Linders
 Donate link: http://www.pimlinders.com/wordpress
-Tags: photos, images, admin, gallery, post, photo-albums, pictures, photo, picture, image, flickr, highslide
+Tags: photos, images, admin, gallery, post, photo-albums, pictures, photo, photoset, picture, image, flickr, highslide
 Requires at least: 2.7
 Tested up to: 2.7.1
-Stable tag: 1.1
+Stable tag: 1.2
 
 == Description ==
 
 This plugin displays flickr photos using highslide.
+
+Features include:
+* 13 unique ways of displaying your photos
+* 8 different gallery styles
+* Displays photos from a photoset
+* Displays all of a user's photos 
+* Displays photos in latest and random order
+* Ability to change the size of images and thumbnails
+* Displays the titles of photos
 
 == Credits ==
 

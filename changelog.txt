@@ -1,4 +1,7 @@
-v1.0.1
+v1.2
+-Added photoset support
+
+v1.1
 -Added highslide gallery options
 
 v1.0

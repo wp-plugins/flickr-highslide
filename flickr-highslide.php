@@ -3,7 +3,7 @@
 Plugin Name: Flickr + Highslide
 Plugin URI: http://www.pimlinders.com/wordpress/
 Description: This plugin displays flickr photos using highslide.
-Version: 1.1
+Version: 1.2
 Author: Pim Linders
 Author URI: http://www.pimlinders.com
  ____                       
@@ -58,11 +58,11 @@ function flickr_highslide_head() {
 	else if ($options == '2'){
 		echo "
 			hs.registerOverlay({
-			html: '<div class=\"closebutton\" onclick=\"return hs.close(this)\" title=\"Close\"></div>',
-			position: 'top right',
-			fade: 2
-		});
-		hs.wrapperClassName = 'borderless';
+				html: '<div class=\"closebutton\" onclick=\"return hs.close(this)\" title=\"Close\"></div>',
+				position: 'top right',
+				fade: 2
+			});
+			hs.wrapperClassName = 'borderless';
 		";
 	}
 	else if ($options == '3'){
@@ -77,8 +77,8 @@ function flickr_highslide_head() {
 	else if ($options == '5'){
 		echo "
 			hs.outlineType = null;
-			hs.wrapperClassName = 'colored-border';
-		";
+			hs.wrapperClassName = 'colored-border'
+		;";
 	}
 	else if ($options == '6'){
 		echo "
@@ -204,7 +204,6 @@ function flickr_highslide_head() {
 					relativeTo: 'viewport',
 					offsetX: 50,
 					offsetY: -5
-		
 				},
 				thumbstrip: {
 					position: 'middle left',
@@ -366,6 +365,7 @@ function flickr_highslide_activate() {
 	update_option("order");
 	update_option("imageSize");
 	update_option("thumb");
+	update_option("photoset");
 }
 function flickr_highslide_init(){
 	register_setting('flickr_highslide_options', 'id');
@@ -375,6 +375,7 @@ function flickr_highslide_init(){
 	register_setting('flickr_highslide_options', 'order');
 	register_setting('flickr_highslide_options', 'imageSize');
 	register_setting('flickr_highslide_options', 'thumb');	
+	register_setting('flickr_highslide_options', 'photoset');
 }
 function flickr_highslide_options() {
 	register_setting('flickr_highslide_options', 'id');
@@ -383,7 +384,8 @@ function flickr_highslide_options() {
 	register_setting('flickr_highslide_options', 'options');
 	register_setting('flickr_highslide_options', 'order');
 	register_setting('flickr_highslide_options', 'imageSize');
-	register_setting('flickr_highslide_options', 'thumb');	
+	register_setting('flickr_highslide_options', 'thumb');
+	register_setting('flickr_highslide_options', 'photoset');
 ?>
 <div class="wrap">
 <table class="form-table">
@@ -397,6 +399,10 @@ function flickr_highslide_options() {
         <tr valign="top">
             <th scope="row">Number of images:</th>
             <td><input type="text" name="imageNum" value="<?php echo get_option('imageNum'); ?>" /><span style="margin-left:5px;">(Up to 100 images)</span></td>
+        </tr>
+        <tr valign="top">
+            <th scope="row">Photoset</th>
+            <td><input type="text" name="photoset" value="<?php echo get_option('photoset'); ?>" /><span style="margin-left:5px;">(Optional)</span></td>
         </tr>
         <tr valign="top">
             <th scope="row">Highslide:</th>
@@ -476,93 +482,150 @@ function flickr_highslide(){
 	$imageSize = get_option('imageSize');
 	$thumbnail = get_option('thumb');
 	$options = get_option('options');
+	$photoSet = get_option('photoset');
 	if($id == '' || $imageNum == '')
 		echo '<p>To configure Flickr + Highslide go to Admin -> Setting -> Flickr + Highslide</p>';
 	else{	
-		$xml = simplexml_load_file("http://flickr.com/services/rest/?method=flickr.people.getPublicPhotos&user_id=$id&api_key=$apikey");
-		if ($xml->err['msg']){
-			echo '<p>Flickr + Highslide is not configured correctly</p><p>Error Message: ' . $xml->err['msg'] . '</p>';	
-		}
-		else{
-			$total = $xml->photos['total'];
-			if ($order == 'random')
-				$random = random($total);
-			if ($imageSize == 'medium')
-				$size = '';
-			else if ($imageSize == 'small')
-				$size = '_m';
+		if (ini_get('allow_url_fopen')){ 
+			if($photoSet==''){
+				$xml = simplexml_load_file("http://flickr.com/services/rest/?method=flickr.people.getPublicPhotos&user_id=$id&api_key=$apikey");
+				$photos = TRUE;
+			}
 			else
-				$size = '_b';
-			if ($options == '9' || $options == '13')
-				$size = '';
-			if ($thumbnail == 'thumbnail')
-				$thumbnail = '_t';
-			else
-				$thumbnail = '_s';	
-		?>
-        <!-- Flickr + Highslide by Pim Linders http://www.pimlinders.com/ -->
-        <?php if($options == '13'){ ?>
-        	<div class="flickr_highslide" style="overflow:auto; display:none;">
-        <?php } else{ ?>
-        	<div class="flickr_highslide" style="overflow:auto;">
-        <?php } ?>
-		<?php
-			if($options == '8')
-				$heading = true;
-			for ($k=0; $k<$imageNum; $k++) {
-				if ($order == 'random')
-					$i = $random[$k];
+			{     
+				$photoSets = simplexml_load_file("http://api.flickr.com/services/rest/?method=flickr.photosets.getList&user_id=$id&api_key=$apikey");
+				for ($j=0; $j<count($photoSets->photosets->photoset); $j++) {
+					if($photoSets->photosets->photoset[$j]->title==$photoSet)
+					{
+						$photoSetId = $photoSets->photosets->photoset[$j]['id'];
+						break;
+					}		
+				}
+				$xml = simplexml_load_file("http://flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=$apikey&photoset_id=$photoSetId");
+			}
+			if ($xml->err['msg']){
+				echo '<p>Flickr + Highslide is not configured correctly</p><p>Error: ' . $xml->err['msg'] . '</p>';	
+			}
+			else{
+				if($photos)
+					$total = $xml->photos['total'];
 				else
-					$i = $k;
-				if($xml->photos->photo[$i]['server'] == NULL)
-					break;
-				?>
-                <?php if (get_option('title')==true && $heading == true){ ?>
-                    <div class="highslide-heading">
-                       <?php echo $xml->photos->photo[$i]['title'] ?>
-                    </div>
-				<?php } if(get_option('title')==false && $heading == true){?>
-                    <div class="highslide-heading"></div>
-                <?php } ?>
-                <a 
-				<?php if($options == '13' && $k==0){ ?>
-                	id="thumb1"
-                <?php } ?>
-                href="<?php 
-                echo "http://static.flickr.com/";
-                echo $xml->photos->photo[$i]['server'];
-                echo "/";
-                echo $xml->photos->photo[$i]['id'];
-                echo "_";
-                echo $xml->photos->photo[$i]['secret'];
-                echo "$size.jpg"; 
-                ?>" <?php if($options == '13'){ ?>
-                	class="highslide" onclick="return hs.expand(this, inPageOptions)">
-				<?php } else{ ?>
-                	class="highslide" onclick="return hs.expand(this)">
-				<?php } ?>
-                <img src="<?php 
-                echo "http://static.flickr.com/";
-                echo $xml->photos->photo[$i]['server'];
-                echo "/";
-                echo $xml->photos->photo[$i]['id'];
-                echo "_";
-                echo $xml->photos->photo[$i]['secret'];
-                echo "$thumbnail.jpg"; 
-                ?>" 
-                alt="" /></a>
-                <?php if (get_option('title') && $heading == false){ ?>
-                    <div class="highslide-caption">
-                        <?php echo $xml->photos->photo[$i]['title'] ?>
-                    </div>
-                <?php
+					$total = $xml->photoset['total'];
+				if ($order == 'random')
+					$random = random($total);
+				if ($imageSize == 'medium')
+					$size = '';
+				else if ($imageSize == 'small')
+					$size = '_m';
+				else
+					$size = '_b';
+				if ($options == '9' || $options == '13')
+					$size = '';
+				if ($thumbnail == 'thumbnail')
+					$thumbnail = '_t';
+				else
+					$thumbnail = '_s';	
+			?>
+			<!-- Flickr + Highslide by Pim Linders http://www.pimlinders.com/ -->
+			<?php if($options == '13'){ ?>
+				<div class="flickr_highslide" style="overflow:auto; display:none;">
+			<?php } else{ ?>
+				<div class="flickr_highslide" style="overflow:auto;">
+			<?php }
+				if($options == '8')
+					$heading = true;
+				for ($k=0; $k<$imageNum; $k++) {
+					if ($order == 'random')
+						$i = $random[$k];
+					else
+						$i = $k;
+					if($photos){
+						if($xml->photos->photo[$i]['server'] == NULL)
+							break;
+					}
+					else{
+						if($xml->photoset->photo[$i]['server'] == NULL)
+							break;
+					}
+					?>
+					<?php if (get_option('title') == true && $heading == true){ ?>
+						<div class="highslide-heading">
+						<?php 
+						if($photos)
+							echo $xml->photos->photo[$i]['title'];
+						else
+							echo $xml->photoset->photo[$i]['title'];
+						?>
+						</div>
+					<?php } if(get_option('title') == false && $heading == true){?>
+						<div class="highslide-heading"></div>
+					<?php } ?>
+					<a 
+					<?php if($options == '13' && $k==0){ ?>
+						id="thumb1"
+					<?php } ?>
+					href="<?php 
+					echo "http://static.flickr.com/";
+					if($photos){
+						echo $xml->photos->photo[$i]['server'];
+						echo "/";
+						echo $xml->photos->photo[$i]['id'];
+						echo "_";
+						echo $xml->photos->photo[$i]['secret'];
+					}
+					else{
+						echo $xml->photoset->photo[$i]['server'];
+						echo "/";
+						echo $xml->photoset->photo[$i]['id'];
+						echo "_";
+						echo $xml->photoset->photo[$i]['secret'];
+					}
+					echo "$size.jpg"; 
+					?>" <?php if($options == '13'){ ?>
+						class="highslide" onclick="return hs.expand(this, inPageOptions)">
+					<?php } else{ ?>
+						class="highslide" onclick="return hs.expand(this)">
+					<?php } ?>
+					<img src="<?php 
+					echo "http://static.flickr.com/";
+					if($photos){
+						echo $xml->photos->photo[$i]['server'];
+						echo "/";
+						echo $xml->photos->photo[$i]['id'];
+						echo "_";
+						echo $xml->photos->photo[$i]['secret'];
+					}
+					else{
+						echo $xml->photoset->photo[$i]['server'];
+						echo "/";
+						echo $xml->photoset->photo[$i]['id'];
+						echo "_";
+						echo $xml->photoset->photo[$i]['secret'];
+					}
+					echo "$thumbnail.jpg"; 
+					?>" 
+					alt="" /></a>
+					<?php if (get_option('title') && $heading == false){ ?>
+						<div class="highslide-caption">
+							<?php 
+							if($photos)
+								echo $xml->photos->photo[$i]['title'];
+							else
+								echo $xml->photoset->photo[$i]['title'];
+							?>
+						</div>
+					<?php
+					}
+				}
+				?></div>
+				<?php if($options == '13'){ ?>
+					<div id="gallery-area" style="width: 620px; height: 605px; margin: 0 auto; border: 1px solid silver"></div>
+				<?php
 				}
 			}
-			?></div>
-        	<?php if($options == '13'){ ?>
-        		<div id="gallery-area" style="width: 620px; height: 605px; margin: 0 auto; border: 1px solid silver"></div>
-			<?php
-			}
+		}
+		else{
+			echo "<p>Flickr + Highslide requires the PHP parameter allow_url_fopen which is disabled on your host. To enable it create an php.ini file in the root directory of this WordPress install, the php.ini file must contain the following:</p><p><b>extension=simplexml.so</p><p>allow_url_fopen = On</b></p>";
 		}
 	}
 }
