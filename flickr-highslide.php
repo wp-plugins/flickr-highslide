@@ -486,7 +486,7 @@ function flickr_highslide(){
 	if($id == '' || $imageNum == '')
 		echo '<p>To configure Flickr + Highslide go to Admin -> Setting -> Flickr + Highslide</p>';
 	else{	
-		if (ini_get('allow_url_fopen')){ 
+		if(ini_get('allow_url_fopen')){ 
 			if($photoSet==''){
 				$xml = simplexml_load_file("http://flickr.com/services/rest/?method=flickr.people.getPublicPhotos&user_id=$id&api_key=$apikey");
 				$photos = TRUE;
@@ -510,17 +510,17 @@ function flickr_highslide(){
 					$total = $xml->photos['total'];
 				else
 					$total = $xml->photoset['total'];
-				if ($order == 'random')
+				if($order == 'random')
 					$random = random($total);
-				if ($imageSize == 'medium')
+				if($imageSize == 'medium')
 					$size = '';
 				else if ($imageSize == 'small')
 					$size = '_m';
 				else
 					$size = '_b';
-				if ($options == '9' || $options == '13')
+				if $options == '9' || $options == '13')
 					$size = '';
-				if ($thumbnail == 'thumbnail')
+				if($thumbnail == 'thumbnail')
 					$thumbnail = '_t';
 				else
 					$thumbnail = '_s';	
