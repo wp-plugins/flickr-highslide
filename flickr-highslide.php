@@ -514,11 +514,11 @@ function flickr_highslide(){
 					$random = random($total);
 				if($imageSize == 'medium')
 					$size = '';
-				else if ($imageSize == 'small')
+				else if($imageSize == 'small')
 					$size = '_m';
 				else
 					$size = '_b';
-				if $options == '9' || $options == '13')
+				if($options == '9' || $options == '13')
 					$size = '';
 				if($thumbnail == 'thumbnail')
 					$thumbnail = '_t';
