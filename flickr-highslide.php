@@ -493,11 +493,10 @@ function flickr_highslide(){
 			}
 			else
 			{     
-				$photoSets = simplexml_load_file("http://api.flickr.com/services/rest/?method=flickr.photosets.getList&user_id=$id&api_key=$apikey");
-				for ($j=0; $j<count($photoSets->photosets->photoset); $j++) {
-					if($photoSets->photosets->photoset[$j]->title==$photoSet)
-					{
-						$photoSetId = $photoSets->photosets->photoset[$j]['id'];
+				$photoList = simplexml_load_file("http://api.flickr.com/services/rest/?method=flickr.photosets.getList&user_id=$id&api_key=$apikey");
+				for ($j=0; $j<count($photoList->photosets->photoset); $j++) {
+					if($photoList->photosets->photoset[$j]->title==$photoSet){
+						$photoSetId = $photoList->photosets->photoset[$j]['id'];
 						break;
 					}		
 				}
