@@ -4,7 +4,7 @@ Contributors: Pim Linders
 Donate link: http://www.pimlinders.com/wordpress
 Tags: photos, images, admin, gallery, post, photo-albums, pictures, photo, photoset, picture, image, flickr, highslide
 Requires at least: 2.7
-Tested up to: 2.7.1
+Tested up to: 2.8
 Stable tag: 1.2
 
 == Description ==
