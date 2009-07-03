@@ -11,7 +11,7 @@ Stable tag: 1.2
 
 This plugin displays flickr photos using highslide.
 
-Features include:
+= Features =
 * 13 unique ways of displaying your photos
 * 8 different gallery styles
 * Displays photos from a photoset
