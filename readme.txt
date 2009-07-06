@@ -16,7 +16,7 @@ This plugin displays flickr photos using highslide.
 * 8 different gallery styles
 * Displays photos from a photoset
 * Displays all of a user's photos 
-* Displays photos in latest and random order
+* Displays photos in latest or random order
 * Ability to change the size of images and thumbnails
 * Displays the titles of photos
 
