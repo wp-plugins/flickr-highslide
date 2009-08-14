@@ -488,11 +488,10 @@ function flickr_highslide(){
 	else{	
 		if(ini_get('allow_url_fopen')){ 
 			if($photoSet==''){
-				$xml = simplexml_load_file("http://flickr.com/services/rest/?method=flickr.people.getPublicPhotos&user_id=$id&api_key=$apikey");
+				$xml = simplexml_load_file("http://www.flickr.com/services/rest/?method=flickr.people.getPublicPhotos&user_id=$id&api_key=$apikey");
 				$photos = TRUE;
 			}
-			else
-			{     
+			else{     
 				$photoList = simplexml_load_file("http://api.flickr.com/services/rest/?method=flickr.photosets.getList&user_id=$id&api_key=$apikey");
 				for ($j=0; $j<count($photoList->photosets->photoset); $j++) {
 					if($photoList->photosets->photoset[$j]->title==$photoSet){
@@ -500,7 +499,7 @@ function flickr_highslide(){
 						break;
 					}		
 				}
-				$xml = simplexml_load_file("http://flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=$apikey&photoset_id=$photoSetId");
+				$xml = simplexml_load_file("http://www.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=$apikey&photoset_id=$photoSetId");
 			}
 			if ($xml->err['msg']){
 				echo '<p>Flickr + Highslide is not configured correctly</p><p>Error: ' . $xml->err['msg'] . '</p>';	
@@ -549,12 +548,12 @@ function flickr_highslide(){
 					?>
 					<?php if (get_option('title') == true && $heading == true){ ?>
 						<div class="highslide-heading">
-						<?php 
-						if($photos)
-							echo $xml->photos->photo[$i]['title'];
-						else
-							echo $xml->photoset->photo[$i]['title'];
-						?>
+							<?php 
+							if($photos)
+								echo $xml->photos->photo[$i]['title'];
+							else
+								echo $xml->photoset->photo[$i]['title'];
+							?>
 						</div>
 					<?php } if(get_option('title') == false && $heading == true){?>
 						<div class="highslide-heading"></div>
