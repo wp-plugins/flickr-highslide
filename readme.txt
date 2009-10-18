@@ -1,7 +1,7 @@
 === Flickr + Highslide ===
 
 Contributors: Pim Linders
-Donate link: http://www.pimlinders.com/wordpress
+Donate link: http://www.pimlinders.com/flickrhighslide
 Tags: photos, images, admin, gallery, post, photo-albums, pictures, photo, photoset, picture, image, flickr, highslide
 Requires at least: 2.7
 Tested up to: 2.8
