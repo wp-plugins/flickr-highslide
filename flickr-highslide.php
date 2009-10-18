@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Flickr + Highslide
-Plugin URI: http://www.pimlinders.com/flickrhighslide/
+Plugin URI: http://www.pimlinders.com/flickr-highslide/
 Description: This plugin displays flickr photos using highslide.
 Version: 1.2
 Author: Pim Linders
