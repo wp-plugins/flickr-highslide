@@ -1,9 +1,9 @@
 <?php
 /*
 Plugin Name: Flickr + Highslide
-Plugin URI: http://www.pimlinders.com/flickr-highslide/
+Plugin URI: http://pimlinders.com/flickr-highslide/
 Description: This plugin displays flickr photos using highslide.
-Version: 1.2
+Version: 1.3
 Author: Pim Linders
 Author URI: http://www.pimlinders.com
  ____                       
@@ -366,6 +366,8 @@ function flickr_highslide_activate() {
 	update_option("imageSize");
 	update_option("thumb");
 	update_option("photoset");
+	update_option("pagination");
+	update_option("pageSize");
 }
 function flickr_highslide_init(){
 	register_setting('flickr_highslide_options', 'id');
@@ -376,6 +378,8 @@ function flickr_highslide_init(){
 	register_setting('flickr_highslide_options', 'imageSize');
 	register_setting('flickr_highslide_options', 'thumb');	
 	register_setting('flickr_highslide_options', 'photoset');
+	register_setting('flickr_highslide_options', 'pagination');
+	register_setting('flickr_highslide_options', 'pageSize');
 }
 function flickr_highslide_options() {
 	register_setting('flickr_highslide_options', 'id');
@@ -386,23 +390,46 @@ function flickr_highslide_options() {
 	register_setting('flickr_highslide_options', 'imageSize');
 	register_setting('flickr_highslide_options', 'thumb');
 	register_setting('flickr_highslide_options', 'photoset');
+	register_setting('flickr_highslide_options', 'pagination');
+	register_setting('flickr_highslide_options', 'pageSize');
 ?>
 <div class="wrap">
-<table class="form-table">
+	<h2>Flickr + Highslide by: <a href="http://www.pimlinders.com/">Pim Linders</a></h2>
+	<div style="padding-left:10px;">
+		<p>If you find this plugin helpful, please consider donating a few dollars to support this plugin. Thanks!</p>
+		<form method="post" action="https://www.paypal.com/cgi-bin/webscr">
+			<input type="hidden" value="_donations" name="cmd"/>
+			<input type="hidden" value="pimlinders@gmail.com" name="business"/>
+			<input type="hidden" value="Flickr + Highslide Donation" name="item_name"/>
+			<input type="hidden" value="Flickr + Highslide" name="item_number"/>
+			<input type="hidden" value="Primary" name="page_style"/>
+			<input type="hidden" value="1" name="no_shipping"/>
+			<input type="hidden" value="http://pimlinders.com/flickr-highslide/thank-you" name="return"/>
+			<input type="hidden" value="http://pimlinders.com/flickr-highslide/" name="cancel_return"/>
+			<input type="hidden" value="USD" name="currency_code"/>
+			<input type="hidden" value="0" name="tax"/>
+			<input type="hidden" value="Message / Note" name="cn"/>
+			<input type="hidden" value="US" name="lc"/>
+			<input type="hidden" value="PP-DonationsBF" name="bn"/>
+			<p style="float:left;">Amount: $ <input type="text" style="width: 50px;" value="" name="amount"/> USD</p>
+			<input type="image" style="float:left; margin-left:10px; border:0px;" border="0" alt="Make payments with PayPal - it's fast, free and secure!" name="submit" src="https://www.paypal.com/en_US/i/btn/x-click-butcc-donate.gif"/>
+			<img width="1" height="1" style="border:0px; float:left;" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" alt=""/>
+		</form>
+	</div>
+	<table class="form-table" style="clear:both">
     <form method="post" action="options.php">
-        <h2>Flickr + Highslide by: <a href="http://www.pimlinders.com/">Pim Linders</a></h2>
         <?php settings_fields('flickr_highslide_options'); ?>
         <tr valign="top">
-            <th scope="row">Flickr user ID:</th>
-            <td><input type="text" name="id" value="<?php echo get_option('id'); ?>" /><a style="margin-left:5px;" href="http://idgettr.com/">Find your flickr user ID</a></td>
+            <th scope="row">Flickr user ID: <span style="color:red">*</span></th>
+            <td><input type="text" name="id" value="<?php echo get_option('id'); ?>" /><span style="margin-left:5px;"><a href="http://idgettr.com/">Find your flickr user ID</a></span></td>
         </tr>
         <tr valign="top">
-            <th scope="row">Number of images:</th>
-            <td><input type="text" name="imageNum" value="<?php echo get_option('imageNum'); ?>" /><span style="margin-left:5px;">(Up to 100 images)</span></td>
+            <th scope="row">Number of images: <span style="color:red">*</span></th>
+            <td><input type="text" name="imageNum" value="<?php echo get_option('imageNum'); ?>" /></td>
         </tr>
         <tr valign="top">
-            <th scope="row">Photoset</th>
-            <td><input type="text" name="photoset" value="<?php echo get_option('photoset'); ?>" /><span style="margin-left:5px;">(Optional)</span></td>
+            <th scope="row">Photoset name:</th>
+            <td><input type="text" name="photoset" value="<?php echo get_option('photoset'); ?>" /></td>
         </tr>
         <tr valign="top">
             <th scope="row">Highslide:</th>
@@ -423,7 +450,7 @@ function flickr_highslide_options() {
             </select></td>
         </tr>
         <tr valign="top">
-            <th scope="row">Image Size:</th>
+            <th scope="row">Image size:</th>
             <td><select name="imageSize">							
                 <option <?php if (get_option('imageSize') == 'large') { ?> selected="selected" <?php } ?> value="large">Large</option>
                 <option <?php if (get_option('imageSize') == 'medium') { ?> selected="selected" <?php } ?> value="medium">Medium</option>
@@ -448,6 +475,14 @@ function flickr_highslide_options() {
             <th scope="row">Display titles:</th>
             <td><input type="checkbox" name="title" value="true" <?php if(get_option('title')  == "true"){echo "checked" ;}?>/></td>
         </tr>
+		<tr valign="top">
+            <th scope="row">Use pages:</th>
+            <td><input type="checkbox" name="pagination" value="true" <?php if(get_option('pagination')  == "true"){echo "checked" ;}?>/></td>
+        </tr>
+		<tr valign="top">
+            <th scope="row">Number of images per page:</th>
+            <td><input type="text" name="pageSize" value="<?php echo get_option('pageSize'); ?>" /></td>
+        </tr>
         <tr valign="top">
         	<td><p class="submit"><input type="submit" name="Submit" value="Save changes"/></p></td>
         </tr>
@@ -461,21 +496,9 @@ add_action('admin_menu', 'flickr_highslide_menu');
 add_action( 'admin_init', 'flickr_highslide_init' );
 add_shortcode('flickr_highslide', 'flickr_highslide');
 register_activation_hook( __FILE__, 'flickr_highslide_activate' );
-function random($total){
-	$imageNum = get_option('imageNum');
-	if($total > 100)
-		$total = 100;
-	if ($imageNum > $total)
-		$imageNum = $total;
-	$numbers = array(); 
-	for ($i=0; $i<$total; $i++) {
-		$numbers[$i] = $i;
-	}
-	$rand = array_rand($numbers, $imageNum);
-	return $rand;
-}
 function flickr_highslide(){
 	$apikey =  '7410a0ef9c742bc8175d7930c1fa7022';
+	//get values from the backend
 	$id = get_option('id');
 	$imageNum = get_option('imageNum');
 	$order = get_option('order');
@@ -483,148 +506,269 @@ function flickr_highslide(){
 	$thumbnail = get_option('thumb');
 	$options = get_option('options');
 	$photoSet = get_option('photoset');
+	$pagination = get_option('pagination');
+	$pageSize = get_option('pageSize');
+	$flickrPhotos = $imageNum;
+	//limit page size to 500, this is done because a page corresponds with an xml request, an xml page from flickr is limited to 500 children
+	$requestSize = 500;
+	if($pageSize>$requestSize)
+		$pageSize = $requestSize;
+	if($imageNum<$requestSize)
+		$perPage = $imageNum;
+	else
+		$perPage = $requestSize;
+	//check to see if the ID and number of images fields are filled out, if not ask the user to configure the plugin
 	if($id == '' || $imageNum == '')
 		echo '<p>To configure Flickr + Highslide go to Admin -> Setting -> Flickr + Highslide</p>';
-	else{	
-		if(ini_get('allow_url_fopen')){ 
-			if($photoSet==''){
-				$xml = simplexml_load_file("http://www.flickr.com/services/rest/?method=flickr.people.getPublicPhotos&user_id=$id&api_key=$apikey");
-				$photos = TRUE;
+	else{
+		//get page number, if there is no page number set page to 1
+		$page = $_GET["page"];
+		if($page == NULL) 
+			$page = 1;
+		if($pagination){
+			//when the total number of images exceeds that of the number of images per page, set the loop to the number of images per page
+			if($imageNum > $pageSize){
+				$flickrPhotos = $pageSize;
+				//limit the number of images to display when a page request exceed the number of images
+				//i.e. if number of images is 101 and the number of image per page is 50, limit the 3rd page to 1 photo
+				$limit = ($pageSize * $page) - $imageNum;
+				if($limit > 0)
+					$flickrPhotos = ($pageSize - $limit); 
 			}
-			else{     
-				$photoList = simplexml_load_file("http://api.flickr.com/services/rest/?method=flickr.photosets.getList&user_id=$id&api_key=$apikey");
-				for ($j=0; $j<count($photoList->photosets->photoset); $j++) {
-					if($photoList->photosets->photoset[$j]->title==$photoSet){
-						$photoSetId = $photoList->photosets->photoset[$j]['id'];
-						break;
-					}		
-				}
-				$xml = simplexml_load_file("http://www.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=$apikey&photoset_id=$photoSetId");
+			$perPage = $pageSize;
+		}
+		//use flickr.people.getPublicPhotos flickr api method
+		if($photoSet==''){
+			$url = "http://www.flickr.com/services/rest/?method=flickr.people.getPublicPhotos&user_id=$id&api_key=$apikey&per_page=$perPage&page=$page";
+			$xml = getXML($url);
+			//set the photoXml to use photos
+			$photoXml = $xml->photos;
+			//this is used to later call the proper flickr api method when requesting a new page
+			$photos = true;
+		}
+		//use flickr.photosets.getPhotos flickr api method
+		else{    
+			//get photoSet ID
+			$url = "http://api.flickr.com/services/rest/?method=flickr.photosets.getList&user_id=$id&api_key=$apikey";
+			$photoList = getXML($url);
+			for ($j=0; $j<count($photoList->photosets->photoset); $j++) {
+				if($photoList->photosets->photoset[$j]->title==$photoSet){
+					$photoSetId = $photoList->photosets->photoset[$j]['id'];
+					break;
+				}		
 			}
-			if ($xml->err['msg']){
-				echo '<p>Flickr + Highslide is not configured correctly</p><p>Error: ' . $xml->err['msg'] . '</p>';	
-			}
-			else{
-				if($photos)
-					$total = $xml->photos['total'];
-				else
-					$total = $xml->photoset['total'];
-				if($order == 'random')
-					$random = random($total);
-				if($imageSize == 'medium')
-					$size = '';
-				else if($imageSize == 'small')
-					$size = '_m';
-				else
-					$size = '_b';
-				if($options == '9' || $options == '13')
-					$size = '';
-				if($thumbnail == 'thumbnail')
-					$thumbnail = '_t';
-				else
-					$thumbnail = '_s';	
-			?>
-			<!-- Flickr + Highslide by Pim Linders http://www.pimlinders.com/ -->
-			<?php if($options == '13'){ ?>
-				<div class="flickr_highslide" style="overflow:auto; display:none;">
-			<?php } else{ ?>
-				<div class="flickr_highslide" style="overflow:auto;">
-			<?php }
-				if($options == '8')
-					$heading = true;
-				for ($k=0; $k<$imageNum; $k++) {
-					if ($order == 'random')
-						$i = $random[$k];
-					else
-						$i = $k;
-					if($photos){
-						if($xml->photos->photo[$i]['server'] == NULL)
-							break;
-					}
-					else{
-						if($xml->photoset->photo[$i]['server'] == NULL)
-							break;
-					}
-					?>
-					<?php if (get_option('title') == true && $heading == true){ ?>
-						<div class="highslide-heading">
-							<?php 
-							if($photos)
-								echo $xml->photos->photo[$i]['title'];
-							else
-								echo $xml->photoset->photo[$i]['title'];
-							?>
-						</div>
-					<?php } if(get_option('title') == false && $heading == true){?>
-						<div class="highslide-heading"></div>
-					<?php } ?>
-					<a 
-					<?php if($options == '13' && $k==0){ ?>
-						id="thumb1"
-					<?php } ?>
-					href="<?php 
-					echo "http://static.flickr.com/";
-					if($photos){
-						echo $xml->photos->photo[$i]['server'];
-						echo "/";
-						echo $xml->photos->photo[$i]['id'];
-						echo "_";
-						echo $xml->photos->photo[$i]['secret'];
-					}
-					else{
-						echo $xml->photoset->photo[$i]['server'];
-						echo "/";
-						echo $xml->photoset->photo[$i]['id'];
-						echo "_";
-						echo $xml->photoset->photo[$i]['secret'];
-					}
-					echo "$size.jpg"; 
-					?>" <?php if($options == '13'){ ?>
-						class="highslide" onclick="return hs.expand(this, inPageOptions)">
-					<?php } else{ ?>
-						class="highslide" onclick="return hs.expand(this)">
-					<?php } ?>
-					<img src="<?php 
-					echo "http://static.flickr.com/";
-					if($photos){
-						echo $xml->photos->photo[$i]['server'];
-						echo "/";
-						echo $xml->photos->photo[$i]['id'];
-						echo "_";
-						echo $xml->photos->photo[$i]['secret'];
-					}
-					else{
-						echo $xml->photoset->photo[$i]['server'];
-						echo "/";
-						echo $xml->photoset->photo[$i]['id'];
-						echo "_";
-						echo $xml->photoset->photo[$i]['secret'];
-					}
-					echo "$thumbnail.jpg"; 
-					?>" 
-					alt="" /></a>
-					<?php if (get_option('title') && $heading == false){ ?>
-						<div class="highslide-caption">
-							<?php 
-							if($photos)
-								echo $xml->photos->photo[$i]['title'];
-							else
-								echo $xml->photoset->photo[$i]['title'];
-							?>
-						</div>
-					<?php
-					}
-				}
-				?></div>
-				<?php if($options == '13'){ ?>
-					<div id="gallery-area" style="width: 620px; height: 605px; margin: 0 auto; border: 1px solid silver"></div>
-				<?php
-				}
-			}
+			$url = "http://www.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=$apikey&photoset_id=$photoSetId&per_page=$perPage&page=$page";
+			$xml = getXML($url);
+			//set the photoXml to use photoset
+			$photoXml = $xml->photoset;
+		}
+		//if there's an error requesting the xml file, display error
+		if ($xml->err['msg']){
+			echo '<p>Flickr + Highslide encountered an error</p><p>Error: ' . $xml->err['msg'] . '</p>';	
 		}
 		else{
-			echo "<p>Flickr + Highslide requires the PHP parameter allow_url_fopen which is disabled on your host. To enable it create an php.ini file in the root directory of this WordPress install, the php.ini file must contain the following:</p><p><b>extension=simplexml.so</p><p>allow_url_fopen = On</b></p>";
+			//get total photos count
+			$total = $photoXml['total'];
+			//get the total pages count
+			$totalPages = $photoXml['pages'];
+			//if its the last page with photos, count the children
+			if($page == $totalPages){
+				$childCnt = count($photoXml->photo);
+				$flickrPhotos = $childCnt;
+			}
+			//if it's not the last page, set number of children to equal the Number of images per page option
+			else{
+				$childCnt = $perPage;
+			}
+			//if the option order is random, call the random function to randomize the photos
+			if($order == 'random')
+				$random = random($childCnt);
+			//add flickr image extension
+			if($imageSize == 'medium')
+				$size = '';
+			else if($imageSize == 'small')
+				$size = '_m';
+			else
+				$size = '_b';
+			if($options == '9' || $options == '13')
+				$size = '';
+			if($thumbnail == 'thumbnail')
+				$thumbnail = '_t';
+			else
+				$thumbnail = '_s';		
+			echo "<!-- Flickr + Highslide by Pim Linders http://www.pimlinders.com/ -->\n";
+			if($options == '13'){
+				echo '<div class="flickr_highslide" style="overflow:auto; display:none;">';
+			}
+			else{
+				echo '<div class="flickr_highslide" style="overflow:auto;">';
+			}
+			//Gallery 8 - Controls in the heading
+			if($options == '8')
+				$heading = true;
+			//if user input is larger than total photos available, make imageNum the total images
+			if($imageNum > $total)
+				$imageNum = $total;
+			//find the last page
+			if($pagination)
+				$lastPage = ceil($imageNum/$pageSize);
+			//keep track of the current position in the xml page 
+			$j = 0;
+			//loop through all the photos
+			for($k=0; $k<$flickrPhotos; $k++){
+				//get the next page of images from flickr
+				if($j==$perPage){
+					//increase the page count
+					$page++;
+					//reset the the position in the xml page
+					$j = 0;
+					//use flickr.people.getPublicPhotos flickr api method
+					if($photos){
+						//get request from flickr
+						$url = "http://www.flickr.com/services/rest/?method=flickr.people.getPublicPhotos&user_id=$id&api_key=$apikey&per_page=$perPage&page=$page";
+						$xml = getXML($url);
+						//set the photoXml to use photos
+						$photoXml = $xml->photos;
+					}
+					//use flickr.photosets.getPhotos flickr api method
+					else{
+						//get request from flickr
+						$url = "http://www.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=$apikey&photoset_id=$photoSetId&per_page=$perPage&page=$page";
+						$xml = getXML($url);
+						//set the photoXml to use photoset
+						$photoXml = $xml->photoset;
+					}
+					//if its the last page with photos, count the children
+					if($page == $totalPages)
+						$childCnt = count($photoXml->photo);
+					else
+						$childCnt = $perPage;
+					//if the option order is random, call the random function to randomize the photos
+					if($order == 'random')
+						$random = random($childCnt);
+				}
+				//indicate which photo to display
+				if($order == 'random' && $childCnt != 1)
+					$i = $random[$j];
+				else
+					$i = $j;
+				//checks to make sure there are phtos on the page, if not break
+				if($photoXml->photo[$i]['server'] == NULL)
+					break;
+				//html for Gallery 8 - Controls in the heading
+				if(get_option('title') == true && $heading == true){
+					echo "<div class='highslide-heading'>";
+					echo $photoXml->photo[$i]['title'];
+					echo "</div>";
+				}
+				if(get_option('title') == false && $heading == true){
+					echo "<div class='highslide-heading'></div>";
+				}
+				//generate html
+				$imgLink = '<a ';
+				if($options == '13' && $k==0)
+					$imgLink .=	'id="thumb1" ';
+				$imgLink .= 'href="';
+				$imgLink .= "http://static.flickr.com/";
+				$imgLink .= $photoXml->photo[$i]['server'];
+				$imgLink .= "/";
+				$imgLink .= $photoXml->photo[$i]['id'];
+				$imgLink .= "_";
+				$imgLink .= $photoXml->photo[$i]['secret'];
+				$imgLink .= $size . '.jpg" '; 
+				if($options == '13')
+					$imgLink .= 'class="highslide" onclick="return hs.expand(this, inPageOptions)">';
+				else
+					$imgLink .= 'class="highslide" onclick="return hs.expand(this)">';
+				$imgLink .= '<img src="';
+				$imgLink .= "http://static.flickr.com/";
+				$imgLink .= $photoXml->photo[$i]['server'];
+				$imgLink .= "/";
+				$imgLink .= $photoXml->photo[$i]['id'];
+				$imgLink .= "_";
+				$imgLink .= $photoXml->photo[$i]['secret'];
+				$imgLink .= "$thumbnail.jpg"; 
+				$imgLink .= '" alt="'.$photoXml->photo[$i]['title'].'" /></a>';
+				echo $imgLink . "\n";
+				//set title for all gallery except for Gallery 8 - Controls in the heading
+				if (get_option('title') && $heading == false){
+					echo '<div class="highslide-caption">';
+					echo $photoXml->photo[$i]['title'];
+				echo '</div>';
+				}
+				//move to the next child
+				$j++;
+			}
+			echo '</div>';
+			//Gallery 13 - Gallery in the parent page
+			if($options == '13')
+				echo '<div id="gallery-area" style="width: 620px; height: 605px; margin: 0 auto;"></div>';
+			//add pagination to the gallery
+			if($pagination){
+				echo '<div class="flickr_highslide_pagnation">';
+				//print back
+				if($page > 1) {
+					$back = $page-1;
+					echo '<span class="fhPagnation fhBack"><a href="?page='. $back .'">&laquo; Back</a></span>';
+				}	
+				//print page numbers
+				for($pages = 1; $pages<=$lastPage; $pages++) {
+					//print hyperlinks to individual pages
+					//limit the total number of page links to, -2 current page + 2, unless the current page is the first, second, second to last, or last page
+					if($pages == $page){
+						$rightString = '';
+						$middleString = '';
+						$leftString = '';
+						if(($pages-2) >= 1)
+							$middleString .= '<span class="fhPagnation fhPage"><a href="?page='.($pages-2).'">'.($pages-2).'</a></span>';	
+						else if(($pages+3) <= $lastPage)
+							$rightString .= '<span class="fhPagnation fhPage"><a href="?page='.($pages+3).'">'.($pages+3).'</a></span>';
+						if(($pages-1) >= 1)
+							$middleString .= '<span class="fhPagnation fhPage"><a href="?page='.($pages-1).'">'.($pages-1).'</a></span>';	
+						else if(($pages+4) <= $lastPage)
+							$rightString .= '<span class="fhPagnation fhPage"><a href="?page='.($pages+4).'">'.($pages+4).'</a></span>';
+						$middleString .= '<span class="fhPagnation fhCurPage">'.$pages.'</span>';
+						if(($pages+1) <= $lastPage)
+							$middleString .= '<span class="fhPagnation fhPage"><a href="?page='.($pages+1).'">'.($pages+1).'</a></span>';
+						else if(($pages-4) >= 1)
+							$leftString .= '<span class="fhPagnation fhPage"><a href="?page='.($pages-4).'">'.($pages-4).'</a></span>';
+						if(($pages+2) <= $lastPage)
+							$middleString .= '<span class="fhPagnation fhPage"><a href="?page='.($pages+2).'">'.($pages+2).'</a></span>';
+						else if(($pages-3) >= 1)
+							$leftString .= '<span class="fhPagnation fhPage"><a href="?page='.($pages-3).'">'.($pages-3).'</a></span>';
+						echo $leftString;
+						echo $middleString;
+						echo $rightString;
+					}
+				}	
+				//print next
+				if($page <= $totalPages && $page != $lastPage) {
+					$next = $page+1;
+					echo '<span class="fhPagnation fhNext"><a href="?page='. $next .'">Next &raquo;</a></span>';
+				}
+				echo '</div';
+			}
 		}
 	}
+}
+//use curl to get the xml file from flickr
+function getXML($url){
+	$ch = curl_init();
+	curl_setopt($ch,CURLOPT_URL,$url);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+	$response = curl_exec($ch);
+	$xml = simplexml_load_string($response);
+	curl_close($ch);
+	return $xml;
+}
+//randomize an array
+function random($childCnt){
+	$imageNum = get_option('imageNum');	
+	$numbers = array(); 
+	for($i=0; $i<$childCnt; $i++) {
+		$numbers[$i] = $i;
+	}
+	$rand = array_rand($numbers, $childCnt);
+	return $rand;
 }
 ?>

@@ -1,3 +1,28 @@
+/**
+* @file: highslide.css 
+* @version: 4.1.8
+*/
+/* Change css below to style the flickr + highslide pagnation menu*/
+/* Pagnation Container */
+.flickr_highslide_pagnation{
+}
+/* pagination element (prev, page number, current page, and next) */
+.flickr_highslide_pagnation .fhPagnation{
+	margin-right:4px;
+}
+/* Back */
+.flickr_highslide_pagnation .fhBack{
+}
+/* Current page number */
+.flickr_highslide_pagnation .fhCurPage{
+}
+/* Page number */
+.flickr_highslide_pagnation .fhPage{
+}
+/* Next */
+.flickr_highslide_pagnation .fhNext{
+	margin-right:0px;
+}
 .highslide-container div {
 	font-family: Verdana, Helvetica;
 	font-size: 10pt;
@@ -100,7 +125,6 @@ a.highslide-credits:hover i {
 
 .highslide-viewport {
 	display: none;
-	visibility: hidden;
 	position: fixed;
 	width: 100%;
 	height: 100%;
@@ -128,8 +152,55 @@ a.highslide-credits:hover i {
 }
 
 /*****************************************************************************/
-/* Controls for the galleries.											   */
-/* Remove these if you are not using a gallery							   */
+/* Thumbnail boxes for the galleries.                                        */
+/* Remove these if you are not using a gallery.                              */
+/*****************************************************************************/
+.highslide-gallery ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+.highslide-gallery ul li {
+	display: block;
+	position: relative;
+	float: left;
+	width: 106px;
+	height: 106px;
+	border: 1px solid silver;
+	background: #ededed;
+	margin: 2px;
+	line-height: 0;
+	overflow: hidden;
+}
+.highslide-gallery ul a {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+}
+.highslide-gallery ul img {
+ 	position: relative;
+	top: -50%;
+	left: -50%;
+}
+html>/**/body .highslide-gallery ul li {
+	display: table;
+	text-align: center;
+}
+html>/**/body .highslide-gallery ul li {
+	text-align: center;
+}
+html>/**/body .highslide-gallery ul a {
+	position: static;
+	display: table-cell;
+	vertical-align: middle;
+}
+html>/**/body .highslide-gallery ul img {
+	position: static;
+}
+
+/*****************************************************************************/
+/* Controls for the galleries.											     */
+/* Remove these if you are not using a gallery							     */
 /*****************************************************************************/
 .highslide-controls {
 	width: 195px;
@@ -151,6 +222,7 @@ a.highslide-credits:hover i {
 	float: left;
 	padding: 5px 0;
 	margin:0;
+	list-style: none;
 }
 .highslide-controls a {
 	background-image: url(graphics/controlbar-white.gif);
@@ -321,9 +393,10 @@ a.highslide-credits:hover i {
 	display: none;
 }
 .draggable-header .highslide-header .highslide-close {
-	position: relative;
-	float: right;
-	z-index: 2;
+	position: absolute;
+	right: 2px;
+	top: 2px;
+	z-index: 5;
 	padding: 0;
 }
 .draggable-header .highslide-header .highslide-close a {
@@ -349,7 +422,8 @@ a.highslide-credits:hover i {
 }
 .titlebar .highslide-heading {
 	position: absolute;
-	margin: 1px 0.4em;
+	width: 90%;
+	margin: 1px 0 1px 5px;
 	color: #666666;
 }
 
@@ -464,7 +538,7 @@ a.highslide-credits:hover i {
 	overflow: hidden;
 	cursor: default;
 	padding: 0 0 0 22px;
-	margin: 0;
+	margin: 10px 0;
 	background: url(graphics/icon.gif) no-repeat 0 1px;
 }
 .controls-in-heading .highslide-controls {
@@ -697,7 +771,7 @@ a.highslide-credits:hover i {
 }
 .highslide-thumbstrip-horizontal div {
 	width: auto;
-	/* width: 100% broke in small strips in IE */
+	/* width: 100% breaks in small strips in IE */
 }
 .highslide-thumbstrip-horizontal .highslide-scroll-up {
 	display: none;
@@ -749,6 +823,10 @@ a.highslide-credits:hover i {
 .dark .highslide-thumbstrip-horizontal .highslide-marker, .highslide-viewport .highslide-thumbstrip-horizontal .highslide-marker {
 	border-bottom-color: white !important;
 }
+
+.highslide-thumbstrip-vertical-overlay {
+	overflow: hidden !important;
+}
 .highslide-thumbstrip-vertical div {
 	height: 100%;
 }
@@ -786,6 +864,9 @@ a.highslide-credits:hover i {
 .highslide-thumbstrip-vertical table {
 	margin: 10px 0 0 10px;
 }
+.highslide-thumbstrip-vertical img {
+	max-width: 60px;
+}
 .highslide-thumbstrip-vertical .highslide-marker {
 	left: 0;
 	margin-top: 8px;
@@ -814,6 +895,7 @@ a.highslide-credits:hover i {
 .highslide-thumbstrip-float img {
 	display: inline;
 	border-color: silver;
+	max-height: 56px;
 }
 .highslide-thumbstrip-float .highslide-active-anchor img {
 	border-color: black;

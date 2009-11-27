@@ -1,3 +1,10 @@
+v1.3
+-Added alt tags to images
+-Added pagination support
+-Updated Highslide JS
+-Removed image limit
+-Implemented cURL
+
 v1.2
 -Added photoset support
 

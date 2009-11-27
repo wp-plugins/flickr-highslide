@@ -2,10 +2,10 @@
 
 Contributors: Pim Linders
 Donate link: http://www.pimlinders.com/flickr-highslide
-Tags: photos, images, admin, gallery, post, photo-albums, pictures, photo, photoset, picture, image, flickr, highslide
+Tags: photos, images, admin, gallery, post, photo album, pictures, photo, photoset, picture, image, flickr, highslide
 Requires at least: 2.7
-Tested up to: 2.8
-Stable tag: 1.2
+Tested up to: 2.8.6
+Stable tag: 1.3
 
 == Description ==
 
@@ -18,7 +18,8 @@ This plugin displays flickr photos using highslide.
 * Displays all of a user's photos 
 * Displays photos in latest or random order
 * Ability to change the size of images and thumbnails
-* Displays the titles of photos
+* Ability to seperate photos into pages
+* Displays photo titles
 
 == Credits ==
 
@@ -55,12 +56,11 @@ http://www.highslide.com/ on commercial websites.
 == Screenshots ==
 
 1. Admin Area
-2. Flickr gallery
+2. Flickr gallery with pagnation
 3. Highslide - White border and drop shadow
 4. Highslide - White design
 5. Highslide - Vertical thumbstrip to the left
 6. Highslide - Gallery in the parent page
-
 
 == Frequently Asked Questions ==
 
