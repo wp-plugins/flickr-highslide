@@ -590,6 +590,7 @@ function flickr_highslide(){
 				$size = '_m';
 			else
 				$size = '_b';
+			//Gallery 9 - No border and a floating caption || Gallery 13 - Gallery in the parent page	
 			if($options == '9' || $options == '13')
 				$size = '';
 			if($thumbnail == 'thumbnail')
@@ -597,6 +598,7 @@ function flickr_highslide(){
 			else
 				$thumbnail = '_s';		
 			echo "<!-- Flickr + Highslide by Pim Linders http://www.pimlinders.com/ -->\n";
+			//Gallery 13 - Gallery in the parent page
 			if($options == '13'){
 				echo '<div class="flickr_highslide" style="overflow:auto; display:none;">';
 			}
