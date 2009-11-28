@@ -4,23 +4,23 @@
 */
 /* Change css below to style the flickr + highslide pagnation menu*/
 /* Pagnation Container */
-.flickr_highslide_pagnation{
+.flickr_highslide_pagination{
 }
 /* pagination element (prev, page number, current page, and next) */
-.flickr_highslide_pagnation .fhPagnation{
+.flickr_highslide_pagination .fhPagination{
 	margin-right:4px;
 }
 /* Back */
-.flickr_highslide_pagnation .fhBack{
+.flickr_highslide_pagination .fhBack{
 }
 /* Current page number */
-.flickr_highslide_pagnation .fhCurPage{
+.flickr_highslide_pagination .fhCurPage{
 }
 /* Page number */
-.flickr_highslide_pagnation .fhPage{
+.flickr_highslide_pagination .fhPage{
 }
 /* Next */
-.flickr_highslide_pagnation .fhNext{
+.flickr_highslide_pagination .fhNext{
 	margin-right:0px;
 }
 .highslide-container div {

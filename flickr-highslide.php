@@ -473,7 +473,7 @@ function flickr_highslide_options() {
         </tr>
         <tr valign="top">
             <th scope="row">Display titles:</th>
-            <td><input type="checkbox" name="title" value="true" <?php if(get_option('title')  == "true"){echo "checked" ;}?>/></td>
+            <td><input type="checkbox" name="title" value="true" <?php if(get_option('title') == "true"){echo "checked" ;}?>/></td>
         </tr>
 		<tr valign="top">
             <th scope="row">Use pages:</th>
@@ -506,6 +506,7 @@ function flickr_highslide(){
 	$thumbnail = get_option('thumb');
 	$options = get_option('options');
 	$photoSet = get_option('photoset');
+	$displayTitle = get_option('title');
 	$pagination = get_option('pagination');
 	$pageSize = get_option('pageSize');
 	$flickrPhotos = $imageNum;
@@ -658,12 +659,12 @@ function flickr_highslide(){
 				if($photoXml->photo[$i]['server'] == NULL)
 					break;
 				//html for Gallery 8 - Controls in the heading
-				if(get_option('title') == true && $heading == true){
+				if($displayTitle == true && $heading == true){
 					echo "<div class='highslide-heading'>";
 					echo $photoXml->photo[$i]['title'];
 					echo "</div>";
 				}
-				if(get_option('title') == false && $heading == true){
+				if($displayTitle == false && $heading == true){
 					echo "<div class='highslide-heading'></div>";
 				}
 				//generate html
@@ -693,7 +694,7 @@ function flickr_highslide(){
 				$imgLink .= '" alt="'.$photoXml->photo[$i]['title'].'" /></a>';
 				echo $imgLink . "\n";
 				//set title for all gallery except for Gallery 8 - Controls in the heading
-				if (get_option('title') && $heading == false){
+				if($displayTitle && $heading == false){
 					echo '<div class="highslide-caption">';
 					echo $photoXml->photo[$i]['title'];
 				echo '</div>';
@@ -707,11 +708,11 @@ function flickr_highslide(){
 				echo '<div id="gallery-area" style="width: 620px; height: 605px; margin: 0 auto;"></div>';
 			//add pagination to the gallery
 			if($pagination){
-				echo '<div class="flickr_highslide_pagnation">';
+				echo '<div class="flickr_highslide_pagination">';
 				//print back
 				if($page > 1) {
 					$back = $page-1;
-					echo '<span class="fhPagnation fhBack"><a href="?page='. $back .'">&laquo; Back</a></span>';
+					echo '<span class="fhPagination fhBack"><a href="?page='. $back .'">&laquo; Back</a></span>';
 				}	
 				//print page numbers
 				for($pages = 1; $pages<=$lastPage; $pages++) {
@@ -722,22 +723,22 @@ function flickr_highslide(){
 						$middleString = '';
 						$leftString = '';
 						if(($pages-2) >= 1)
-							$middleString .= '<span class="fhPagnation fhPage"><a href="?page='.($pages-2).'">'.($pages-2).'</a></span>';	
+							$middleString .= '<span class="fhPagination fhPage"><a href="?page='.($pages-2).'">'.($pages-2).'</a></span>';	
 						else if(($pages+3) <= $lastPage)
-							$rightString .= '<span class="fhPagnation fhPage"><a href="?page='.($pages+3).'">'.($pages+3).'</a></span>';
+							$rightString .= '<span class="fhPagination fhPage"><a href="?page='.($pages+3).'">'.($pages+3).'</a></span>';
 						if(($pages-1) >= 1)
-							$middleString .= '<span class="fhPagnation fhPage"><a href="?page='.($pages-1).'">'.($pages-1).'</a></span>';	
+							$middleString .= '<span class="fhPagination fhPage"><a href="?page='.($pages-1).'">'.($pages-1).'</a></span>';	
 						else if(($pages+4) <= $lastPage)
-							$rightString .= '<span class="fhPagnation fhPage"><a href="?page='.($pages+4).'">'.($pages+4).'</a></span>';
-						$middleString .= '<span class="fhPagnation fhCurPage">'.$pages.'</span>';
+							$rightString .= '<span class="fhPagination fhPage"><a href="?page='.($pages+4).'">'.($pages+4).'</a></span>';
+						$middleString .= '<span class="fhPagination fhCurPage">'.$pages.'</span>';
 						if(($pages+1) <= $lastPage)
-							$middleString .= '<span class="fhPagnation fhPage"><a href="?page='.($pages+1).'">'.($pages+1).'</a></span>';
+							$middleString .= '<span class="fhPagination fhPage"><a href="?page='.($pages+1).'">'.($pages+1).'</a></span>';
 						else if(($pages-4) >= 1)
-							$leftString .= '<span class="fhPagnation fhPage"><a href="?page='.($pages-4).'">'.($pages-4).'</a></span>';
+							$leftString .= '<span class="fhPagination fhPage"><a href="?page='.($pages-4).'">'.($pages-4).'</a></span>';
 						if(($pages+2) <= $lastPage)
-							$middleString .= '<span class="fhPagnation fhPage"><a href="?page='.($pages+2).'">'.($pages+2).'</a></span>';
+							$middleString .= '<span class="fhPagination fhPage"><a href="?page='.($pages+2).'">'.($pages+2).'</a></span>';
 						else if(($pages-3) >= 1)
-							$leftString .= '<span class="fhPagnation fhPage"><a href="?page='.($pages-3).'">'.($pages-3).'</a></span>';
+							$leftString .= '<span class="fhPagination fhPage"><a href="?page='.($pages-3).'">'.($pages-3).'</a></span>';
 						echo $leftString;
 						echo $middleString;
 						echo $rightString;
@@ -746,7 +747,7 @@ function flickr_highslide(){
 				//print next
 				if($page <= $totalPages && $page != $lastPage) {
 					$next = $page+1;
-					echo '<span class="fhPagnation fhNext"><a href="?page='. $next .'">Next &raquo;</a></span>';
+					echo '<span class="fhPagination fhNext"><a href="?page='. $next .'">Next &raquo;</a></span>';
 				}
 				echo '</div';
 			}

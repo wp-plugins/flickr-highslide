@@ -56,7 +56,7 @@ http://www.highslide.com/ on commercial websites.
 == Screenshots ==
 
 1. Admin Area
-2. Flickr gallery with pagnation
+2. Flickr gallery with pagination
 3. Highslide - White border and drop shadow
 4. Highslide - White design
 5. Highslide - Vertical thumbstrip to the left
