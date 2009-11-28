@@ -518,9 +518,9 @@ function flickr_highslide(){
 		$perPage = $imageNum;
 	else
 		$perPage = $requestSize;
-	//check to see if the ID and number of images fields are filled out, if not ask the user to configure the plugin
-	if($id == '' || $imageNum == '')
-		echo '<p>To configure Flickr + Highslide go to Admin -> Setting -> Flickr + Highslide</p>';
+	//ensure the that the plugin is configured correctly, if not, display an error message
+	if($id == '' || $imageNum == '' || ($pagination == true && $pageSize == ''))
+		echo '<p>Flickr + highlside is not configured properly, to configure Flickr + Highslide go to Admin -> Setting -> Flickr + Highslide.</p><p>Note: when using pagination you must specify the number of images per page.</p>';
 	else{
 		//get page number, if there is no page number set page to 1
 		$page = $_GET["page"];
