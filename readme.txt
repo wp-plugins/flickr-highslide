@@ -47,7 +47,7 @@ http://www.highslide.com/ on commercial websites.
 
 == Installation ==
 
-1. Upload the files to wp-content/plugins/flickr-highslide
+1. Upload the files to wp-content\plugins\flickr-highslide
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Configure Flickr + Highslide by going to Admin -> Settings -> Flickr + Highslide
 4. Go to your post/page and insert the tag '[flickr_highslide]'
