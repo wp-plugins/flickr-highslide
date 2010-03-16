@@ -62,6 +62,37 @@ http://www.highslide.com/ on commercial websites.
 5. Highslide - Vertical thumbstrip to the left
 6. Highslide - Gallery in the parent page
 
+== Changelog ==
+
+= 1.3 =
+* Added alt tags to images
+* Added pagination support
+* Updated Highslide JS
+* Removed image limit
+* Implemented cURL
+
+= 1.2 =
+* Added photoset support
+
+= 1.1 =
+* Added highslide gallery options
+
+= 1.0 =
+* Improved backend
+
+= 0.3 =
+* Added highslide options
+* Added order control
+* Added image size control
+* Added thumbnail control
+* Added additional error checking
+* Fixed bugs
+
+= 0.2 =
+* Added display title control
+* Removed alt tag from images
+
+
 == Frequently Asked Questions ==
 
 = How do I find a flickr user ID? =
