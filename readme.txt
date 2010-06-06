@@ -1,7 +1,7 @@
 === Flickr + Highslide ===
 
 Contributors: Pim Linders
-Donate link: http://www.pimlinders.com/flickr-highslide
+Donate link: http://flickrhighslide.com
 Tags: photos, images, admin, gallery, post, photo album, pictures, photo, photoset, picture, image, flickr, highslide
 Requires at least: 2.7
 Tested up to: 2.8.6
@@ -61,6 +61,37 @@ http://www.highslide.com/ on commercial websites.
 4. Highslide - White design
 5. Highslide - Vertical thumbstrip to the left
 6. Highslide - Gallery in the parent page
+
+== Changelog ==
+
+= 1.3 =
+* Added alt tags to images
+* Added pagination support
+* Updated Highslide JS
+* Removed image limit
+* Implemented cURL
+
+= 1.2 =
+* Added photoset support
+
+= 1.1 =
+* Added highslide gallery options
+
+= 1.0 =
+* Improved backend
+
+= 0.3 =
+* Added highslide options
+* Added order control
+* Added image size control
+* Added thumbnail control
+* Added additional error checking
+* Fixed bugs
+
+= 0.2 =
+* Added display title control
+* Removed alt tag from images
+
 
 == Frequently Asked Questions ==
 
