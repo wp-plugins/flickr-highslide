@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Flickr + Highslide
-Plugin URI: http://pimlinders.com/flickr-highslide/
+Plugin URI: http://flickrhighslide.com
 Description: This plugin displays flickr photos using highslide.
 Version: 1.3
 Author: Pim Linders
@@ -404,8 +404,8 @@ function flickr_highslide_options() {
 			<input type="hidden" value="Flickr + Highslide" name="item_number"/>
 			<input type="hidden" value="Primary" name="page_style"/>
 			<input type="hidden" value="1" name="no_shipping"/>
-			<input type="hidden" value="http://pimlinders.com/flickr-highslide/thank-you" name="return"/>
-			<input type="hidden" value="http://pimlinders.com/flickr-highslide/" name="cancel_return"/>
+			<input type="hidden" value="http://flickrhighslide.com/thank-you/" name="return"/>
+			<input type="hidden" value="http://flickrhighslide.com/" name="cancel_return"/>
 			<input type="hidden" value="USD" name="currency_code"/>
 			<input type="hidden" value="0" name="tax"/>
 			<input type="hidden" value="Message / Note" name="cn"/>
@@ -697,7 +697,7 @@ function flickr_highslide(){
 				if($displayTitle && $heading == false){
 					echo '<div class="highslide-caption">';
 					echo $photoXml->photo[$i]['title'];
-				echo '</div>';
+					echo '</div>';
 				}
 				//move to the next child
 				$j++;
