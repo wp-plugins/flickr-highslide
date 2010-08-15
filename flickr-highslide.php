@@ -424,7 +424,7 @@ function flickr_highslide_options() {
         <?php settings_fields('flickr_highslide_options'); ?>
 		<tr valign="top">
             <th scope="row">Flickr API key: <span style="color:red">*</span></th>
-            <td><input type="text" name="key" value="<?php echo get_option('key'); ?>" /><span style="margin-left:5px;"><a href="http://www.flickr.com/services/apps/create/apply/">Apply for API key</a></span></td>
+            <td><input type="text" name="key" value="<?php echo get_option('key'); ?>" /><span style="margin-left:5px;"><a href="http://www.flickr.com/services/apps/create/apply/">Apply for an API key</a></span></td>
         </tr>
         <tr valign="top">
             <th scope="row">Flickr user ID: <span style="color:red">*</span></th>
