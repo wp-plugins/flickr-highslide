@@ -3,7 +3,7 @@
 Plugin Name: Flickr + Highslide
 Plugin URI: http://flickrhighslide.com
 Description: This plugin displays flickr photos using highslide.
-Version: 1.3
+Version: 1.3.1
 Author: Pim Linders
 Author URI: http://www.pimlinders.com
  ____                       
@@ -358,6 +358,7 @@ function flickr_highslide_head() {
 	}
 }
 function flickr_highslide_activate() {
+	update_option("key");
 	update_option("id");
 	update_option("imageNum");
 	update_option("title");
@@ -370,6 +371,7 @@ function flickr_highslide_activate() {
 	update_option("pageSize");
 }
 function flickr_highslide_init(){
+	register_setting('flickr_highslide_options', 'key');
 	register_setting('flickr_highslide_options', 'id');
 	register_setting('flickr_highslide_options', 'imageNum');
 	register_setting('flickr_highslide_options', 'title');
@@ -382,6 +384,7 @@ function flickr_highslide_init(){
 	register_setting('flickr_highslide_options', 'pageSize');
 }
 function flickr_highslide_options() {
+	register_setting('flickr_highslide_options', 'key');
 	register_setting('flickr_highslide_options', 'id');
 	register_setting('flickr_highslide_options', 'imageNum');
 	register_setting('flickr_highslide_options', 'title');
@@ -419,6 +422,10 @@ function flickr_highslide_options() {
 	<table class="form-table" style="clear:both">
     <form method="post" action="options.php">
         <?php settings_fields('flickr_highslide_options'); ?>
+		<tr valign="top">
+            <th scope="row">Flickr API key: <span style="color:red">*</span></th>
+            <td><input type="text" name="key" value="<?php echo get_option('key'); ?>" /><span style="margin-left:5px;"><a href="http://www.flickr.com/services/apps/create/apply/">Apply for API key</a></span></td>
+        </tr>
         <tr valign="top">
             <th scope="row">Flickr user ID: <span style="color:red">*</span></th>
             <td><input type="text" name="id" value="<?php echo get_option('id'); ?>" /><span style="margin-left:5px;"><a href="http://idgettr.com/">Find your flickr user ID</a></span></td>
@@ -497,8 +504,8 @@ add_action( 'admin_init', 'flickr_highslide_init' );
 add_shortcode('flickr_highslide', 'flickr_highslide');
 register_activation_hook( __FILE__, 'flickr_highslide_activate' );
 function flickr_highslide(){
-	$apikey =  '7410a0ef9c742bc8175d7930c1fa7022';
 	//get values from the backend
+	$apikey = get_option('key');
 	$id = get_option('id');
 	$imageNum = get_option('imageNum');
 	$order = get_option('order');

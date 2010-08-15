@@ -4,8 +4,8 @@ Contributors: Pim Linders
 Donate link: http://flickrhighslide.com
 Tags: photos, images, admin, gallery, post, photo album, pictures, photo, photoset, picture, image, flickr, highslide
 Requires at least: 2.7
-Tested up to: 2.8.6
-Stable tag: 1.3
+Tested up to: 3.0.1
+Stable tag: 1.3.1
 
 == Description ==
 
