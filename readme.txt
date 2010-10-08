@@ -5,7 +5,7 @@ Donate link: http://flickrhighslide.com
 Tags: photos, images, admin, gallery, post, photo album, pictures, photo, photoset, picture, image, flickr, highslide
 Requires at least: 2.7
 Tested up to: 3.0.1
-Stable tag: 1.3.1
+Stable tag: 1.4
 
 == Description ==
 
@@ -52,6 +52,7 @@ http://www.highslide.com/ on commercial websites.
 3. Configure Flickr + Highslide by going to Admin -> Settings -> Flickr + Highslide
 4. Go to your post/page and insert the tag '[flickr_highslide]'
 5. Alternatively you can insert `<?php flickr_highslide(); ?>` within your blog's templates by going to Admin -> Appearance -> Editor
+6. If you like to use multiple photosets on a post/page insert [flickr_highslide set="NAME OF PHOTOSET HERE"], replacing NAME OF PHOTOSET HERE with the name of your photoset
 
 == Screenshots ==
 
@@ -63,6 +64,13 @@ http://www.highslide.com/ on commercial websites.
 6. Highslide - Gallery in the parent page
 
 == Changelog ==
+
+= 1.4 =
+* Added the ability to display multiple photosets
+* Fixed random function
+
+= 1.3.1 =
+* Changed API key to user input
 
 = 1.3 =
 * Added alt tags to images

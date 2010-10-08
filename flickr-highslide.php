@@ -3,7 +3,7 @@
 Plugin Name: Flickr + Highslide
 Plugin URI: http://flickrhighslide.com
 Description: This plugin displays flickr photos using highslide.
-Version: 1.3.1
+Version: 1.4
 Author: Pim Linders
 Author URI: http://www.pimlinders.com
  ____                       
@@ -503,7 +503,10 @@ add_action('admin_menu', 'flickr_highslide_menu');
 add_action( 'admin_init', 'flickr_highslide_init' );
 add_shortcode('flickr_highslide', 'flickr_highslide');
 register_activation_hook( __FILE__, 'flickr_highslide_activate' );
-function flickr_highslide(){
+function flickr_highslide($atts=false){
+    extract(shortcode_atts(array(
+        'set' => get_option('photoset')
+    ), $atts));
 	//get values from the backend
 	$apikey = get_option('key');
 	$id = get_option('id');
@@ -512,7 +515,7 @@ function flickr_highslide(){
 	$imageSize = get_option('imageSize');
 	$thumbnail = get_option('thumb');
 	$options = get_option('options');
-	$photoSet = get_option('photoset');
+    $photoSet = $set;
 	$displayTitle = get_option('title');
 	$pagination = get_option('pagination');
 	$pageSize = get_option('pageSize');
@@ -548,7 +551,7 @@ function flickr_highslide(){
 		//use flickr.people.getPublicPhotos flickr api method
 		if($photoSet==''){
 			$url = "http://www.flickr.com/services/rest/?method=flickr.people.getPublicPhotos&user_id=$id&api_key=$apikey&per_page=$perPage&page=$page";
-			$xml = getXML($url);
+			$xml = flickr_highslide_get_xml($url);
 			//set the photoXml to use photos
 			$photoXml = $xml->photos;
 			//this is used to later call the proper flickr api method when requesting a new page
@@ -558,7 +561,7 @@ function flickr_highslide(){
 		else{    
 			//get photoSet ID
 			$url = "http://api.flickr.com/services/rest/?method=flickr.photosets.getList&user_id=$id&api_key=$apikey";
-			$photoList = getXML($url);
+			$photoList = flickr_highslide_get_xml($url);
 			for ($j=0; $j<count($photoList->photosets->photoset); $j++) {
 				if($photoList->photosets->photoset[$j]->title==$photoSet){
 					$photoSetId = $photoList->photosets->photoset[$j]['id'];
@@ -566,7 +569,7 @@ function flickr_highslide(){
 				}		
 			}
 			$url = "http://www.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=$apikey&photoset_id=$photoSetId&per_page=$perPage&page=$page";
-			$xml = getXML($url);
+			$xml = flickr_highslide_get_xml($url);
 			//set the photoXml to use photoset
 			$photoXml = $xml->photoset;
 		}
@@ -590,7 +593,7 @@ function flickr_highslide(){
 			}
 			//if the option order is random, call the random function to randomize the photos
 			if($order == 'random')
-				$random = random($childCnt);
+				$random = flickr_highslide_random($childCnt);
 			//add flickr image extension
 			if($imageSize == 'medium')
 				$size = '';
@@ -636,7 +639,7 @@ function flickr_highslide(){
 					if($photos){
 						//get request from flickr
 						$url = "http://www.flickr.com/services/rest/?method=flickr.people.getPublicPhotos&user_id=$id&api_key=$apikey&per_page=$perPage&page=$page";
-						$xml = getXML($url);
+						$xml = flickr_highslide_get_xml($url);
 						//set the photoXml to use photos
 						$photoXml = $xml->photos;
 					}
@@ -644,7 +647,7 @@ function flickr_highslide(){
 					else{
 						//get request from flickr
 						$url = "http://www.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=$apikey&photoset_id=$photoSetId&per_page=$perPage&page=$page";
-						$xml = getXML($url);
+						$xml = flickr_highslide_get_xml($url);
 						//set the photoXml to use photoset
 						$photoXml = $xml->photoset;
 					}
@@ -655,7 +658,7 @@ function flickr_highslide(){
 						$childCnt = $perPage;
 					//if the option order is random, call the random function to randomize the photos
 					if($order == 'random')
-						$random = random($childCnt);
+						$random = flickr_highslide_random($childCnt);
 				}
 				//indicate which photo to display
 				if($order == 'random' && $childCnt != 1)
@@ -750,7 +753,7 @@ function flickr_highslide(){
 						echo $middleString;
 						echo $rightString;
 					}
-				}	
+				}
 				//print next
 				if($page <= $totalPages && $page != $lastPage) {
 					$next = $page+1;
@@ -760,9 +763,10 @@ function flickr_highslide(){
 			}
 		}
 	}
-}
+} //end flickr_highslide
+
 //use curl to get the xml file from flickr
-function getXML($url){
+function flickr_highslide_get_xml($url){
 	$ch = curl_init();
 	curl_setopt($ch,CURLOPT_URL,$url);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
@@ -770,15 +774,11 @@ function getXML($url){
 	$xml = simplexml_load_string($response);
 	curl_close($ch);
 	return $xml;
-}
-//randomize an array
-function random($childCnt){
-	$imageNum = get_option('imageNum');	
-	$numbers = array(); 
-	for($i=0; $i<$childCnt; $i++) {
-		$numbers[$i] = $i;
-	}
-	$rand = array_rand($numbers, $childCnt);
+} //end flickr_highslide_get_xml
+
+function flickr_highslide_random($childCnt){
+	$rand = range(0, $childCnt-1);
+	shuffle($rand);
 	return $rand;
-}
+} //end flickr_highslide_random
 ?>
