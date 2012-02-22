@@ -41,12 +41,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-** Please note **
-
-Highslide JS is licensed under a Creative Commons Attribution-NonCommercial
-2.5 License. This means you need the author's permission to use highslide 
-http://www.highslide.com/ on commercial websites. 
-
 == Installation ==
 
 1. Upload the files to wp-content\plugins\flickr-highslide

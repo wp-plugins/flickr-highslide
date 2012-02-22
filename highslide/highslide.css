@@ -1,27 +1,9 @@
 /**
 * @file: highslide.css 
-* @version: 4.1.8
+* @version: 4.1.13
 */
-/* Change css below to style the flickr + highslide pagnation menu*/
-/* Pagnation Container */
-.flickr_highslide_pagination{
-}
-/* pagination element (prev, page number, current page, and next) */
-.flickr_highslide_pagination .fhPagination{
-	margin-right:4px;
-}
-/* Back */
-.flickr_highslide_pagination .fhBack{
-}
-/* Current page number */
-.flickr_highslide_pagination .fhCurPage{
-}
-/* Page number */
-.flickr_highslide_pagination .fhPage{
-}
-/* Next */
-.flickr_highslide_pagination .fhNext{
-	margin-right:0px;
+#branding {
+	z-index: 999 !important;
 }
 .highslide-container div {
 	font-family: Verdana, Helvetica;
@@ -35,9 +17,7 @@
 	text-decoration: none;
 }
 .highslide img {
-	border: 1px solid #dddddd;
-	float: left;
-	margin: 1px;
+	border: 2px solid silver;
 }
 .highslide:hover img {
 	border-color: gray;
@@ -54,7 +34,6 @@
 	border-width: 2px;
 	border-style: solid;
 	border-color: white;
-	background: gray;
 }
 .highslide-wrapper, .highslide-outline {
 	background: white;
@@ -82,7 +61,7 @@
 	margin: 0.4em;
 }
 .highslide-dimming {
-	position: absolute;
+	/*position: absolute;*/
 	background: black;
 }
 a.highslide-full-expand {
@@ -169,6 +148,7 @@ a.highslide-credits:hover i {
 	border: 1px solid silver;
 	background: #ededed;
 	margin: 2px;
+	padding: 0;
 	line-height: 0;
 	overflow: hidden;
 }
@@ -310,6 +290,9 @@ html>/**/body .highslide-gallery ul img {
 }
 .highslide-html {
 	background-color: white;
+}
+.mobile .highslide-html {
+	border: 1px solid silver;
 }
 .highslide-html-content {
 	display: none;
@@ -538,7 +521,7 @@ html>/**/body .highslide-gallery ul img {
 	overflow: hidden;
 	cursor: default;
 	padding: 0 0 0 22px;
-	margin: 10px 0;
+	margin: 0;
 	background: url(graphics/icon.gif) no-repeat 0 1px;
 }
 .controls-in-heading .highslide-controls {
@@ -737,6 +720,7 @@ html>/**/body .highslide-gallery ul img {
 
 .highslide-thumbstrip {
 	height: 100%;
+	direction: ltr;
 }
 .highslide-thumbstrip div {
 	overflow: hidden;
@@ -865,7 +849,7 @@ html>/**/body .highslide-gallery ul img {
 	margin: 10px 0 0 10px;
 }
 .highslide-thumbstrip-vertical img {
-	max-width: 60px;
+	width: 60px; /* t=5481 */
 }
 .highslide-thumbstrip-vertical .highslide-marker {
 	left: 0;
